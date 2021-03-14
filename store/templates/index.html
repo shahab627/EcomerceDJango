@@ -1,0 +1,119 @@
+
+{% extends  'base.html'%}
+
+
+
+<!-- item cards -->
+{% block content %}
+{% load cart %}
+
+
+    <div  class="container-fluid mt-3">
+      
+      <div class="row">
+        <!-- filter-->
+          <div class="col-lg-3 mx-auto" style="margin-top: 100px;">
+            <div class="list-group" >
+               <a href="/?category=" class="list-group-item list-group-item-action">Select All</a>
+
+              {% for category in categories %}
+              <a href="/?category={{category.id}}" class="list-group-item list-group-item-action">{{category.name}}</a>
+              {% endfor %}
+
+            </div>
+          </div>
+
+        <!-- Products -->
+        <div id="products" class="col-lg-9 mx-auto">
+          <div class=" row mx-auto" style="margin-top: 100px;">
+            {% for product in products %}
+            <div class="card mx-auto my-3 shadow-sm" id="{{product.id}}" style="width: 17rem; " >
+              <img class="card-img-top rounded-2 mx-auto my-2"  src={{product.image.url}} alt="Card image cap">
+              <div class="card-body" style="color: rgb(65, 60, 60);">
+                <h5 class="card-title" >  {{product.name}}</h5>
+                <p class="card-price"><b>Price : {{product.price}} Rs</b></p>
+                <p class="card-des">{{product.description}}</p>
+
+                <div class="row">
+                  <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="Radio" id="smallRadio" value="Small" checked>
+                    <label class="form-check-label" for="smallRadio">
+                      Small
+                    </label>
+                  </div>
+                  <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="Radio" id="mediumRadio" value="Medium" checked>
+                    <label class="form-check-label" for="mediumRadio">
+                      Medium
+                    </label>
+                  </div>
+                  <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="Radio" id="largeRadio" value="Large" checked>
+                    <label class="form-check-label" for="largeRadio">
+                      Large
+                    </label>
+                  </div>
+                  <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="Radio" id="largeRadio" value="Large" checked>
+                    <label class="form-check-label" for="largeRadio">
+                      Large
+                    </label>
+                  </div>
+
+                </div>
+                
+              </div>
+
+
+              <div class="card-footer p-1  border-2" >
+
+                <!--sending product obj and cart dictionary to cart.py and returns tru false-->
+                {% if product|is_in_cart:request.session.cart %}
+                <div class="row nu-gutters" >
+                  
+                  <form action="/#{{product.id}}" class="col-2" method="POST" >
+                    {% csrf_token %}
+                    <input hidden type="text" name="productId" value='{{product.id}}'>
+                    <input hidden type="text" name="cartRemove" value='True'>
+                    <input type="submit" id="minusbtn" value="-" class="btn btn-block btn-secondary">
+                  </form>
+
+                  <div class="col text-center mt-2">{{product | cart_quantity:request.session.cart }}</div>
+
+                  <form action="/#{{product.id}}" class="col-2" method="POST" >
+                    {% csrf_token %}
+                    <input hidden type="text" name="productId" value='{{product.id}}'>
+                    <input type="submit" id="plusbtn" value="+" class=" btn btn-block btn-secondary">
+                  </form>
+                  
+                </div>
+
+                {% else %}
+                <form action="/#{{product.id}}" method="POST" class="btn-block">
+                  {% csrf_token %}
+                  <input hidden type="text" name="productId" value='{{product.id}}'>
+                  <input type="submit" id="addtoCartBtn" class="btn btn-secondary form-control" value="Add to cart">
+                </form>
+                {% endif %}
+
+              </div>
+              
+            </div>
+            {% endfor %}
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+     
+    </div>
+
+    
+
+{% endblock %}
+
+      
+  

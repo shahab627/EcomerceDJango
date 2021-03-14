@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load cart %}
+{% load Custom %}
+
+<div class="container" style="margin-top: 100px;" >
+
+    <div class="border shadow-sm p-4 m-6">
+        <p class="pl-4 display-4 ml-4" style="font-family: monospace;"> Your Items</p>
+        <table class="table">
+            <thead>
+                <tr>
+                   
+                    <th>Sno</th>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+
+                    <td>{{forloop.counter}}</td>
+                    <td><img class="rounded-circle" style="height: 80px;" src={{product.image.url}} alt=""></td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product| cart_quantity:request.session.cart}}</td>
+                    <td>{{product| total_price:request.session.cart}}</td>
+                </tr>
+
+                {% endfor %}
+
+                
+            </tbody>
+            <tfoot>
+                <tr >
+                    <td colspan="4"></td>
+                    <td colspan="1" ><b>Total Amount</b></td>
+                    <td><b>{{products|total_Amount:request.session.cart|Currency}}</b></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="m-3 p-3">
+            <a href="#" class="btn btn-primary btn-outline-info border rounded-3 float-end col-lg-3" style="color: white;"> Checkout</a>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}
