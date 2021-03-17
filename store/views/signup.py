@@ -87,5 +87,4 @@ class SignUp(View):
             Errormessage = "Email not Valid"
         elif Customer.isExist(customer):
             Errormessage = "Email or Phone Number exist Already !"
-
         return Errormessage

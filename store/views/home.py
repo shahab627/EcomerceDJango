@@ -39,6 +39,7 @@ class Index(View):
         data['categories'] = categ
         data['currentCustomer'] = currentCustomer
 
+
         # return render(request,'orders.html')
         return render(request, 'index.html', data)
 

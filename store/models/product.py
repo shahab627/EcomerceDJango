@@ -8,7 +8,9 @@ class Product(models.Model):
     small = models.BooleanField(default= False)
     large = models.BooleanField(default=False)
     small = models.BooleanField(default=False)
-    small = models.BooleanField(default=False)
+    medium = models.BooleanField(default=False)
+    large = models.BooleanField(default=False)
+    Xlarge = models.BooleanField(default=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     description = models.CharField(max_length=200, default='',null= True, blank=True)
     image = models.ImageField(upload_to='uploads/products/')\
