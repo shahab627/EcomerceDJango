@@ -1,7 +1,65 @@
-{% extends 'base.html'  %}
+{% extends 'base.html' %}
 
 {% block content %}
-<br>
-<br>
-  <h1> hello</h1>
+{% load cart %}
+{% load Custom %}
+
+<div class="container" style="margin-top: 100px;" >
+
+    <div class="border shadow-sm p-4 m-6">
+        <p class="pl-4 display-4 ml-4" style="font-family: monospace;"> Your Orders</p>
+        <table class="table">
+            <thead>
+                <tr>
+                   
+                    <th>Sno</th>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Size</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+
+                    <td>{{forloop.counter}}</td>
+                    <td><img class="rounded-circle" style="height: 80px;" src={{order.product.image.url}} alt=""></td>
+                    <td>{{order.product.name}}</td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.price|Currency}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.size}}</td>
+                    <td>{{order.quantity| Total_Order:order.price|Currency}}</td>
+                    {% if order.status %}
+
+                    <td class="badge" 
+                    style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(60, 189, 60, 0.753);">Completed</td>
+
+                    {%else%}
+
+                    <td class="badge"
+                    style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">Pending</td>
+                    {% endif %}
+                    
+                </tr>
+
+                {% endfor %}
+
+                
+            </tbody>
+        
+        </table>
+    
+
+
+    </div>
+</div>
+
+
 {% endblock %}
+

@@ -43,27 +43,52 @@ class Index(View):
         # return render(request,'orders.html')
         return render(request, 'index.html', data)
 
+
+
     def post(self, request):
+
+        data = request.POST.get('size')   # getting size through ajax
         productId = request.POST.get('productId')  # getting product id from index page on click
         cart_Remove = request.POST.get('cartRemove') # return true if we press - button on Home
-        # handling cart and quantity
-        cart = request.session.get('cart')
-        if cart:
-            quantity = cart.get(productId)
 
-            if quantity:
-                if cart_Remove:
-                    if quantity <= 1:
-                        cart.pop(productId)
-                    else:
-                        cart[productId] = quantity - 1
-                else:
-                    cart[productId] = quantity + 1
+        # size---------------------------------------------
+        size = request.session.get('size')
+        print(size)
+
+        if data is not None:
+            items = data.split('-')
+            if size:
+                size[items[1]] = items[0]
             else:
-                cart[productId] = 1
-        else:
-            cart={}
-            cart[productId] = 1
+                size = {}
+                size[items[1]] = items[0]
 
-        request.session['cart'] =cart
+        request.session['size'] = size
+
+        #-----------------------------------------------
+        # handling cart and quantity
+        if productId is not None:
+
+            cart = request.session.get('cart')
+            print(cart, type(productId), productId)
+
+            if cart:
+                quantity = cart.get(productId)
+                if quantity:
+                    if cart_Remove:
+                        if quantity <= 1:
+                            cart.pop(productId)
+                        else:
+                            cart[productId] = quantity - 1
+                    else:
+                        cart[productId] = quantity + 1
+                else:
+                    cart[productId] = 1
+            else:
+                cart = {}
+                cart[productId] = 1
+
+            request.session['cart'] = cart
+
+
         return redirect('Homepage')

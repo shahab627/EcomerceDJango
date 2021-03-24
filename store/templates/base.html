@@ -13,6 +13,7 @@
 
     <title>Ecomerce</title>
 
+
   </head>
   <body>
 
@@ -28,7 +29,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto mx-2">
       <li class="nav-item active">
-        <a class="nav-link" href="/Home">Home </a>
+        <a class="nav-link" href="/">Home </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
@@ -50,10 +51,13 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link " href="/Cart"> Cart </a>
+        <a class="nav-link " href="/Cart"> Cart 
+        <span class="badge"  
+         style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">
+          {{request.session.cart.keys|length}}</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#"> Order </a>
+        <a class="nav-link " href="/orders"> Order </a>
       </li>
        {% if currentCustomer %}
       <li class="nave-username">
@@ -88,12 +92,84 @@
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script>
 
+  // size selection--------------------------------------
 
+  $(".smallRadio") .change(onSizeselect);
+  $(".mediumRadio") .change(onSizeselect);
+  $(".largeRadio") .change(onSizeselect);
+  $(".XlargeRadio") .change(onSizeselect);
+
+  function onSizeselect(){
+
+    var val =null;
+      var token = '{{csrf_token}}';
+    
+      if( $(this).is(":checked") ){ // check if the radio is checked
+         val = $(this).val(); // retrieve the value
+          alert(val);
+        }
+
+
+        $.ajax({
+          headers: { "X-CSRFToken": token },
+          method: "POST",
+          url:"/",
+          data: {'size':val}
+
+      })
+      .done(function (response) {
+
+        console.log(response)
+    })
+    .fail(function (response) {
+        console.log(response)
+    })
+  }
+  
+
+   
+   // check out form--------------------------
+    $("#checkoutForm").submit(onFormSubmit);
+    
+    function onFormSubmit (event)
+    {
+      //read data of form 
+      event.preventDefault()
+      const valuesInArray = $(this).serializeArray()
+      const body = {}
+     
+      
+        valuesInArray.reduce((body, e) => {
+            body[e.name] = e.value
+            return body
+        }, body)
+
+        console.log([body])
+
+      $.ajax({
+          method: "POST",
+          url: "/check-out",
+          data: body
+      })
+          .done(function (response) {
+              console.log(response)
+              event.target.reset()
+              alert(" Your Items are Placed !! ")
+
+              
+          })
+          .fail(function (response) {
+              console.log(response)
+          })
+    }
+
+    // add to cart ------------------------------------------
 
 
 </script>

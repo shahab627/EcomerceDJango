@@ -6,7 +6,7 @@ register = template.Library()
 def is_in_cart(product, cart):
     keys= cart.keys()
     for id in keys:
-        if int(id) == product.id:
+        if id == str(product.id):
             return True
 
     return False
@@ -15,7 +15,7 @@ def is_in_cart(product, cart):
 def cart_quantity(product, cart):
     keys= cart.keys()
     for id in keys:
-        if int(id) == product.id:
+        if id == str(product.id):
             return cart.get(id)
 
     return 0
@@ -30,3 +30,12 @@ def total_Amount(product, cart):
     for p in product:
         Sum += total_price(p, cart)
     return Sum
+
+@register.filter(name = 'product_size')  # sum of all items
+def product_size(product, size):
+    keys = size.keys()
+    for id in keys:
+        if id == str(product.id):
+            return size.get(id)
+
+    return 0
