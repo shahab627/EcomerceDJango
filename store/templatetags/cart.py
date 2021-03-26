@@ -33,9 +33,11 @@ def total_Amount(product, cart):
 
 @register.filter(name = 'product_size')  # sum of all items
 def product_size(product, size):
-    keys = size.keys()
-    for id in keys:
-        if id == str(product.id):
-            return size.get(id)
 
-    return 0
+    if size is not None:
+        keys = size.keys()
+        for id in keys:
+            if id == str(product.id):
+                return size.get(id)
+
+    return "Please Select Size !!"

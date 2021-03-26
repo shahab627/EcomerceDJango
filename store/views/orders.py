@@ -10,7 +10,9 @@ from store.models.oreders import Order
 from django.views import View  # import for class based views
 
 
+
 class OrderView(View):
+
     def get(self, request):
         customer = request.session.get('customer_email')
         mail = request.session.get('customer_email')
