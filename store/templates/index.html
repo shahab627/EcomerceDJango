@@ -23,13 +23,26 @@
             </div>
           </div>
 
+          
+
         <!-- Products -->
         <div id="products" class="col-lg-9 mx-auto">
-          <div class=" row mx-auto" style="margin-top: 100px;">
+          <div class=" row mx-auto item" style="margin-top: 100px;">
+
+
             {% for product in products %}
-            <div class="card mx-auto my-3 shadow-sm" id="{{product.id}}" style="width: 17rem; " >
-              <img class="card-img-top rounded-2 mx-auto my-2"  src={{product.image.url}} alt="Card image cap">
+
+            <div class="card mx-auto my-3 shadow-sm " id="{{product.id}}" style="width: 17rem; " >
+             
+              <img class="card-img-top rounded-2 mx-auto my-2 "  src={{product.image.url}} alt="Card image cap">
+          
+              
               <div class="card-body" style="color: rgb(65, 60, 60);">
+
+                
+            
+                
+                
                 <h5 class="card-title" >  {{product.name}}</h5>
                 <p class="card-price"><b>Price : {{product.price}} Rs</b></p>
                 <p class="card-des">{{product.description}}</p>
@@ -38,9 +51,9 @@
 
                 
                 <div class="row" id="radios">
+                  
 
                   
-                   
                     {% if product.small %}
 
                     <div class="form-check col">
@@ -74,6 +87,23 @@
                 
 
                 </div>
+
+                 <!-- Rate Review Button id passed with Url -->
+                <div class="row">
+                  <div class="p-2">
+                    <a href="{% url 'RateReview' product.id %}">
+                      <button type="button" id="RRvlaue" class="btn btn-secondary btn-outline-info border rounded-3 m-3 RRbtn" style="color: white;" 
+                      data-sid='{{product.id}}' > Rate & Review
+                      </button>
+                    </a>
+                   
+
+                </div>
+
+               
+
+                </div>
+               
                 
               </div>
 
@@ -88,7 +118,7 @@
                     {% csrf_token %}
                     <input hidden type="text" name="productId" value='{{product.id}}'>
                     <input hidden type="text" name="cartRemove" value='True'>
-                    <input type="submit" id="minusbtn" value="-" class="btn btn-block btn-secondary">
+                    <input type="submit"  value="-" class="btn btn-block btn-secondary minusbtn">
                   </form>
 
                   <div class="col text-center mt-2">{{product | cart_quantity:request.session.cart }}</div>
@@ -96,16 +126,16 @@
                   <form action="/#{{product.id}}" class="col-2" id="plusForm" method="POST" >
                     {% csrf_token %}
                     <input hidden type="text" name="productId" value='{{product.id}}'>
-                    <input type="submit" id="plusbtn" value="+" class=" btn btn-block btn-secondary">
+                    <input type="submit"  value="+" class=" btn btn-block btn-secondary plusbtn">
                   </form>
                   
                 </div>
                 <!-- Products add to cart -->
                 {% else %}
-                <form action="/#{{product.id}}" method="POST" id="addToCartForm" class="btn-block">
+                <form action="/#{{product.id}}" method="POST"  class="btn-block addToCartForm">
                   {% csrf_token %}
                   <input hidden type="text" name="productId" value='{{product.id}}'>
-                  <input type="submit" id="addtoCartBtn" class="btn btn-secondary form-control" value="Add to cart">
+                  <input type="submit" id="addtoCartBtn"  class="btn btn-secondary form-control " value="Add to cart">
                 </form>
                 {% endif %}
 
@@ -114,16 +144,54 @@
             </div>
             {% endfor %}
           </div>
+          
+        <nav aria-label="..." class="mt-4">
+          <ul class="pagination">
+            {% if products.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <span class="page-link">Previous</span>
+            </li>
+            {% endif %}
+
+            {% for i in products.paginator.page_range %}
+            {% if i == products.number %}
+            <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+
+            {% endif %}
+            {% endfor %}
+          
+
+            {% if products.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <span class="page-link">Next</span>
+            </li>
+            {% endif %}
+           
+          </ul>
+        </nav>
+          
 
         </div>
+        
 
 
 
       </div>
 
+
      
     </div>
+
+
 {% endblock %}
 
-      
-  

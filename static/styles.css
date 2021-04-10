@@ -1,18 +1,13 @@
 body{
 
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+  
 }
 
 #products .showDetail:hover {background-color: #464747;
     color: azure;}
 
-#products .showDetail{
-    margin-top: 7px;
-    border-radius: 6px;
-    padding: 4px;
 
-}
 
 #products img{
     height: 250px;
@@ -20,7 +15,7 @@ body{
 
 
 #navbarSupportedContent li{
-    margin-left: 20px;
+    margin-left: 25px;
 }
 
 #searchArea{
@@ -37,12 +32,12 @@ nav{
     margin-left: 20px;
 }
 
- #minusbtn:hover{
+ .minusbtn:hover{
     color:rgb(19, 17, 17);
     background-color: rgb(228, 228, 228);
 
 }
-#plusbtn:hover{
+.plusbtn:hover{
     color:rgb(19, 17, 17);
     background-color: rgb(228, 228, 228);
 
@@ -57,3 +52,8 @@ nav{
     background-color: rgb(228, 228, 228);
 
 }
+
+
+
+
+

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -27,6 +28,11 @@ class Index(View):
         else:
             prds = Product.get_all_products()
 
+        #Applying pagination
+        paginator = Paginator(prds, 4)  # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         # Getiing user detail from session
         currentCustomer =None
         mail = request.session.get('customer_email')
@@ -35,12 +41,12 @@ class Index(View):
 
         #--------------------------------
         data = {}
-        data['products'] = prds
+        data['products'] = page_obj
         data['categories'] = categ
         data['currentCustomer'] = currentCustomer
 
 
-        # return render(request,'orders.html')
+
         return render(request, 'index.html', data)
 
 
@@ -64,6 +70,8 @@ class Index(View):
                 size[items[1]] = items[0]
 
         request.session['size'] = size
+
+
 
         #-----------------------------------------------
         # handling cart and quantity

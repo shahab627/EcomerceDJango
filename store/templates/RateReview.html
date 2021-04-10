@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid " style="margin-top: 70px;">
+    <div class="row">
+      <div class="col-lg-3 mx-auto" >
+
+ 
+        
+      </div>
+
+      <div class="col-lg-9 mx-auto shadow" style=" background-color: rgb(238, 235, 235);">
+        <div class=" row mx-auto" >
+            <p class="pl-4 display-4 ml-4" style="font-family: monospace;"> Comment Your Review</p>
+
+            <!--Get Area--->
+            <div class="p-2 bg-white messages" style="margin-bottom: 15%;" id="MessageArea">
+
+              {% if Comments %}
+
+              {% for comt in Comments %}
+
+                <div class="Message border border-secondaryrounded p-2 mb-2" >
+
+                      <div class="ml-2">
+                        <span class="d-block font-weight-bold name" style=" font-size: 20px; color: rgb(12, 14, 116);"><b>{{comt.customerName}}</b></span>
+                        <span class="date text-black-50" >Shared publicly - {{comt.date}}</span>
+                      </div>
+                  
+                  <div class="mt-2">
+                      <p class="comment-text" style=" font-size: 14px; color: rgb(8, 11, 51); font-family: sans-serif;">{{comt.comment}}</p>
+                  </div>
+                  </div>
+
+                  {% endfor %}
+
+                  {% else %}
+
+                  <h3 >Be the first One to Review :)</h3>
+
+                  {% endif %}
+                  
+                 <!--Post Area--->
+
+        </div> 
+        <div class="bg-light p-3 rounded-2" style="width: 73%; position: fixed; bottom: 0; " >
+          <div>
+              <textarea class="ml-1 shadow-none textarea w-100 rounded p-1" placeholder="Enter Message...."  id=commentTxt ></textarea>
+
+          </div>
+          <form action="#" method="POST">
+              {% csrf_token %}
+              <div class="mt-2  text-right">
+                  <input  id="PID" hidden value='{{ProductID}}'>
+                  <button class="btn btn-primary btn-sm shadow-none" id="AddComment" type="button">Post comment</button>
+              </div>
+
+          </form>
+          
+      </div>   
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+

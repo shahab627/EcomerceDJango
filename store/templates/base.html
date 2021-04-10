@@ -6,10 +6,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,300;1,600;1,700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet"  href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet"  href="{% static 'styles.css' %}">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">   
 
     <title>Ecomerce</title>
 
@@ -31,9 +34,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Home </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,17 +51,17 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link " href="/Cart"> Cart 
+        <a class="nav-link " href="/Cart"> <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
         <span class="badge"  
          style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">
           {{request.session.cart.keys|length}}</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/orders"> Order </a>
+      <li class="nav-item ">
+        <a class="nav-link" href="/orders"> Order </a>
       </li>
        {% if currentCustomer %}
-      <li class="nave-username">
-        <label > Hello ! {{currentCustomer.first_name}}  </label>
+      <li class="nave-username nav-item "  >
+        <label  class="nav-link"> Hello ! {{currentCustomer.first_name}}</label>
       </li>
 
        {% endif %}
@@ -91,6 +91,7 @@
 
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -169,7 +170,66 @@
           })
     }
 
-    // add to cart ------------------------------------------
+    // add comment ------------------------------------------
+
+    $(".RRbtn") .click(sendID);
+
+    function sendID(event){
+  
+   
+        var token = '{{csrf_token}}';
+        var id = $(this).attr("data-sid")
+
+            
+    }
+
+    $("#AddComment") .click(SaveComment);
+
+    function SaveComment(){
+  
+      
+      var token = '{{csrf_token}}';
+      var message = document.getElementById("commentTxt").value;
+      var Pid = document.getElementById("PID").value;
+      let output =""
+
+
+      
+
+      $.ajax({
+        headers: { "X-CSRFToken": token },
+        method: "POST",
+        url: '/ratereview',
+        data: {'msg':message,'PID':Pid}
+    })
+        .done(function (data) {
+          if(data.status)
+          {
+            x =data.CommentsData;
+            document.getElementById("commentTxt").value= ""
+            alert(" Your Comment is Posted !! ")
+
+            for(i =0; i < x.length;i++){
+
+              output +=  "<div class='Message border border-secondaryrounded p-2 mb-2'> <div class='ml-2'> <span class='d-block font-weight-bold name' style='font-size: 20px; color: rgb(12, 14, 116);'><b>"+x[i].customerName+"</b></span> <span class='date text-black-50' >Shared publicly - "+x[i].date+"</span></div> <div class='mt-2'> <p class='comment-text' style='font-size: 14px; color: rgb(8, 11, 51); font-family: sans-serif;'>"+x[i].comment+"</p></div> </div>"
+          }
+          $("#MessageArea").html(output);
+            
+
+
+          }
+
+
+
+
+
+        })
+        .fail(function (response) {
+            console.log(response)
+        })
+
+            
+    }
 
 
 </script>
