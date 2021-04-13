@@ -219,17 +219,82 @@
 
           }
 
-
-
-
-
         })
         .fail(function (response) {
             console.log(response)
         })
-
             
     }
+
+
+            // Details Page-----------------------------
+
+            let size= ""
+
+
+            function UpdateAdd(){
+            
+                currentValue = parseInt(document.getElementById("Quantity").textContent)
+                currentValue += 1;
+                document.getElementById("Quantity").textContent= currentValue;
+    
+              
+            }
+    
+            function UpdateSub(){
+    
+              currentValue = parseInt(document.getElementById("Quantity").textContent)
+              if( currentValue >=1 ){    currentValue -= 1;}
+              document.getElementById("Quantity").textContent= currentValue;
+            }
+
+              $(".SmallR") .change(getSize);
+              $(".MediumR") .change(getSize);
+              $(".LargeR") .change(getSize);
+              $(".XlargeR") .change(getSize);
+
+              function getSize(){
+
+                var val =null;
+                
+                  if( $(this).is(":checked") ){ // check if the radio is checked
+                    size = $(this).val(); // retrieve the value
+            
+                    }
+                  }
+    
+            $("#addtoCartBtn") .click(AddtoCart);
+            function AddtoCart(){
+
+              var token = '{{csrf_token}}';
+
+
+              id = document.getElementById("DetailPID").value;
+              quanity = document.getElementById("Quantity").textContent;
+      
+
+
+              $.ajax({
+                headers: { "X-CSRFToken": token },
+                method: "POST",
+                url: '/details',
+                data: {'id':id,'quanity':quanity,'size':size}
+            })
+                .done(function (data) {
+                  if(data.status)
+                  {
+        
+                    alert("Added to Cart")
+        
+                  }
+        
+                })
+                .fail(function (response) {
+                    console.log(response)
+                })
+
+            }
+    
 
 
 </script>

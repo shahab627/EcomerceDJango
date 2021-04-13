@@ -39,7 +39,7 @@ class Index(View):
         if mail:
             currentCustomer=Customer.get_customer_by_mail(mail)
 
-        #--------------------------------
+        #-Post Data-------------------------------
         data = {}
         data['products'] = page_obj
         data['categories'] = categ

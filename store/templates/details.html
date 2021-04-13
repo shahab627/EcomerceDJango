@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load cart %}
+<div style="margin-top: 100px;">
+
+
+    <div class="container-fluid " style="margin-top: 70px;">
+        <div class="row">
+          <div class="col-lg-5 mx-auto" >
+            
+            <div>
+              <img src={{product.image.url}} class="shadow" style="width: 530px; height: 500px; border-radius: 20px;">
+            </div>
+     
+            
+          </div>
+    
+          <div class="col-lg-7 mx-auto ">
+            <div class=" row mr-3 shadow p-3 rounded-lg" style=" background-color: rgba(222, 235, 241, 0.562);" >
+                <div class="container">
+                    <h1 class="text-center text-black-50">{{product.name}}</h1>
+                    <h4 class="text-secondary text-center border-bottom">Price : {{product.price}} Rs</h4>
+    
+                  <!--Quantity-->
+                 <div class="row nu-gutters " style="margin-left: 39%; margin-top: 4%;" >
+                    <span>
+                      <input type="button"  value="-" onclick= UpdateSub() class="btn  btn-lg btn-secondary minusbtn" >
+                      <label class=" text-center mx-4" id="Quantity"> <b>{{product | cart_quantity:request.session.cart }}</b></label>
+                        
+                      <input type="button"  value="+" onclick= UpdateAdd() class=" btn btn-lg btn-secondary plusbtn" >
+                    </span>
+                   
+
+                  
+                  <span style="margin: 20px;"  >
+                    <input hidden type="text" id="DetailPID" value='{{product.id}}'>
+                    <input type="submit" id="addtoCartBtn"  class="btn btn-lg btn-secondary " value="Add to cart">
+                   </span>
+                  
+                </div>
+    
+    
+    
+                    <h4 class="text-secondary ml-3 border-top">Desciption :</h4>
+                    <p class="text-info px-2" style="font-family: cursive;">
+                      {{product.description}}
+                    </p>
+                   
+    
+                    {% if product.small or product.medium or product.large or product.Xlarge  %}
+                    <!---Size-->
+                    <div class="mt-3 ml-3 text-secondary">
+                        <h4> Select Size :</h4>
+                        <div class="mt-3 ml-3 text-dark row border-top" style="font-family: cursive;">
+                           
+    
+                          {% if product.small %}
+                            <span class="form-check col">
+                              <input class="form-check-input SmallR"  type="radio" name="Radio"   value="Small" >
+                              <label class="form-check-label" for="smallRadio"> Small </label>
+                            </span>
+                            {% endif %}
+
+                           
+                            {% if product.medium %}
+                            <span class="form-check col">
+                              <input class="form-check-input  MediumR"  type="radio" name="Radio"   value="Medium" >
+                              <label class="form-check-label" for="mediumRadio"> Medium </label>
+                            </span>
+                            {% endif %}
+
+                            {% if product.large %}
+                            <span class="form-check col">
+                              <input class="form-check-input LargeR"  type="radio" name="Radio"   value="Large" >
+                              <label class="form-check-label" for="largeRadio">Large </label>
+                            </span>
+                            {% endif %}
+
+                            {% if product.Xlarge %}
+                            <span class="form-check col">
+                              <input class="form-check-input XlargeR"  type="radio" name="Radio"   value="XLarge" >
+                              <label class="form-check-label" for="XlargeRadio"> XLarge </label>
+                            </span>
+                            {% endif %}
+
+               
+        
+                        </div>
+                    </div>
+
+                    {% endif %}
+    
+    
+                </div>
+    
+                    
+        
+    
+       
+          </div>
+        </div>
+      </div>
+    
+    </div>
+    
+    <!--Trending-->
+    
+
+
+</div>
+
+{% endblock %}
+
