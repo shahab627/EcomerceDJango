@@ -9,10 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,300;1,600;1,700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet"  href="{% static 'styles.css' %}">
-
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">   
+    <link rel="stylesheet"  href="{% static 'styles.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'review.css' %}">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+
+    
 
     <title>Ecomerce</title>
 
@@ -86,6 +90,7 @@
 {% block content %} {% endblock %}
 
 
+<!---Trending-->
 
 
 
@@ -203,7 +208,7 @@
         data: {'msg':message,'PID':Pid}
     })
         .done(function (data) {
-          if(data.status)
+          if(data.status == "save")
           {
             x =data.CommentsData;
             document.getElementById("commentTxt").value= ""
@@ -217,6 +222,9 @@
             
 
 
+          }
+          else{
+            alert("Plaese Login to Comment !!")
           }
 
         })
@@ -294,7 +302,76 @@
                 })
 
             }
-    
+
+            // Rate Item-----------------------------
+            ratedIndex = -1
+            $("rate-form1").ready(function(){
+          
+              
+              $('.fa-star').mouseover(function(){
+                var currentIndex = parseInt($(this).data('index'));
+                setStars(currentIndex);
+                console.log("entering")
+              });
+          
+              $('.fa-star').mouseleave(function(){
+                $('.fa-star').css({
+                  "font-size": "25px",
+                  "transition": "all 0.2s ease",
+                  "color": "#444",
+
+                  // "padding": "10px"
+                });
+          
+                if(ratedIndex != -1){
+                  setStars(ratedIndex);
+                }
+                console.log("leaving")
+              });
+            });
+          
+            function setStars(max){
+              for(var i=0; i<max; i++){
+                $('.fa-star:eq('+i+')').css({
+                  "font-size": "25px",
+                  "color": "#fd4",
+                  "transition": "all 0.2s ease",
+
+                });
+              }
+            }
+
+            $("#firstStar") .click(getRatting);
+            $("#secondStar") .click(getRatting);
+            $("#thirdStar") .click(getRatting);
+            $("#fourthStar") .click(getRatting);
+            $("#fifthStar") .click(getRatting);
+
+            function getRatting(){
+
+
+              var token = '{{csrf_token}}';
+              id = document.getElementById("PID").value
+              ratting = $(this).attr("data-index");
+
+
+              $.ajax({
+                headers: { "X-CSRFToken": token },
+                method: "POST",
+                url: '',
+                data: {'PID':id,'ratting':ratting}
+            })
+                .done(function (response) {
+                  console.log(response)
+        
+                })
+                .fail(function (response) {
+                    console.log(response)
+                })
+
+           
+
+            }
 
 
 </script>

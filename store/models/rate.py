@@ -1,13 +1,14 @@
 from .customer import Customer
 from .product import Product
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Rate(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     productName = models.CharField(max_length=50, default='')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
+    rating = models.IntegerField(default='0', null=True, validators=[MaxValueValidator(5), MinValueValidator(0)])
 
     @staticmethod
     def get_ratting(Product_name,Customer):

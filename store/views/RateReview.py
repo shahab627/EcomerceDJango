@@ -31,33 +31,36 @@ class RateReview(View):
 
         # --- getting deatails from html thro Ajax----
         name = None
+        status ="save"
         currentCustomer=None
         msg = request.POST.get('msg')
         pid = request.POST.get('PID')
+
 
         Products = Product.get_all_products_by_id(pid)
 
         mail = request.session.get('customer_email')
         if mail:
             currentCustomer = Customer.get_customer_by_mail(mail)
-        if currentCustomer:
-            name = currentCustomer.first_name+" "+ currentCustomer.last_name
+            if currentCustomer:
+                name = currentCustomer.first_name + " " + currentCustomer.last_name
+                # Saving the Data to DataBase
+
+                for P in Products:
+                    if str(pid) == str(P.id):
+                        myProdcut = P
+
+                comment = Comment(product=myProdcut,
+                                  productID=pid,
+                                  customerName=name,
+                                  customer=currentCustomer,
+                                  comment=msg)
+                Comment.addComment(comment)
         else:
-            name = "Annonymous User"
-        # Saving the Data to DataBase
+            status= "error"
 
-        for P in Products:
-            if str(pid) == str(P.id):
-                myProdcut =P
-
-        comment = Comment (product=myProdcut,
-                            productID=pid,
-                            customerName=name,
-                            customer=currentCustomer,
-                            comment=msg)
-        Comment.addComment(comment)
 
         # Updating on Post
         comments = Comment.get_Comment(pid).values()
         commentsData = list(comments)
-        return JsonResponse({'status':'save', 'CommentsData':commentsData})
+        return JsonResponse({'status':status, 'CommentsData':commentsData})

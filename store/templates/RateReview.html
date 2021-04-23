@@ -1,18 +1,38 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
 
-    <div class="container-fluid " style="margin-top: 70px;">
+    <div class="container-fluid" style="margin-top: 100px;">
     <div class="row">
-      <div class="col-lg-3 mx-auto" >
+     
+      <div class="col-lg-9 mx-auto shadow " style=" background-color: rgba(211, 213, 216, 0.719); border-radius: 13px;">
+        <div class=" row mx-auto" ><br>
+            <h2 class="text-uppercase text-center" style="letter-spacing: .2em;">Comment your review</h2>
+              <div class="row text-center" >
+                <div class="col-12">
+                  <div class="rate-form1" >
+                    <form class="rate-form" action="">
 
- 
-        
-      </div>
+                      <input  id="PID" hidden value='{{ProductID}}'>
 
-      <div class="col-lg-9 mx-auto shadow" style=" background-color: rgb(238, 235, 235);">
-        <div class=" row mx-auto" >
-            <p class="pl-4 display-4 ml-4" style="font-family: monospace;"> Comment Your Review</p>
+                      <button type="button" class="fa fa-star my-btn" id="firstStar" data-index="1"></button>
+                      <button type="button" class="fa fa-star my-btn" id="secondStar" data-index="2"></button>
+                      <button type="button" class="fa fa-star my-btn" id="thirdStar" data-index="3"></button>
+                      <button type="button" class="fa fa-star my-btn" id="fourthStar" data-index="4"></button>
+                      <button type="button" class="fa fa-star my-btn" id="fifthStar" data-index="5"></button>
+                    </form>
+                    <!-- <form1 action="#">
+                      <header></header>
+                    </form1> -->
+                  </div>
+                </div>
+                <div class="col-5" style="transition: all 0.2s ease;">
+                  <div id="confirm-box" ></div>
+                </div>
+              </div>
+            </p>
+           
 
             <!--Get Area--->
             <div class="p-2 bg-white messages" style="margin-bottom: 15%; border-radius: 10px;" id="MessageArea">
