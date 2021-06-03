@@ -17,10 +17,14 @@ class CheckOut(View):
     def post(self, request):
         # getting data to place order
         # data obtain thro Ajax
+        status = "save"
         phone = request.POST.get('phone')
         address = request.POST.get('address')
-        customer = request.session.get('customer_email')
         mail = request.session.get('customer_email')
+
+        if address is "" or phone is "":
+            status = "not save"
+
         if mail:
             currentCustomer = Customer.get_customer_by_mail(mail)
 
@@ -29,20 +33,26 @@ class CheckOut(View):
         products = Product.get_all_products_by_id(list(cart.keys()))
 
         for product in products:
+            if size.get(str(product.id)) is None:
+                status = "not save"
 
-            if size.get(str(product.id)) is not None:
-                order = Order(customer=currentCustomer,
-                              product=product,
-                              productName=product.name,
-                              price=product.price,
-                              quantity=cart.get(str(product.id)),
-                              phone=phone,
-                              address=address,
-                              size=size.get(str(product.id))
-                )
-                order.placeOrder()
+        if status == "save":
+            for product in products:
 
-        request.session['cart'] = {}
-        request.session['size'] = {}
+                if size.get(str(product.id)) is not None:
+                    order = Order(customer=currentCustomer,
+                                  product=product,
+                                  productName=product.name,
+                                  price=product.price,
+                                  quantity=cart.get(str(product.id)),
+                                  phone=phone,
+                                  address=address,
+                                  size=size.get(str(product.id))
+                                  )
+                    Order.placeOrder(order)
 
-        return redirect('Homepage')
+            request.session['cart'] = {}
+            request.session['size'] = {}
+            return JsonResponse({'status': status})
+        else:
+            return JsonResponse({'status': status})

@@ -7,48 +7,59 @@
   
     <div class=" p-4 m-4 ">
         <div class="col-lg-5 mx-auto border shadow rounded-2 p-5">
-            <form action="/SignUp" method="post">
+            <form  id="SignUPForm" method="post">
                 {% csrf_token %}
 
-                {% if error %}
 
-                <div class="alert alert-danger" role="alert">
-                  {{error}}
+                <div id="error" class="alert alert-danger" style="visibility: hidden;" role="alert">
+                  
                 </div>
 
-                {% endif %}
+               
 
                 <h2 class="mx-4 my-3" >Create an Account </h2>
                 <hr style="width: auto; height: 2px">
             <!--fname-->
-            <div class="form-group mt-2">
+            <div class="form-group mt-2" id="fname">
               <label for=""> First Name</label>
               <input value="{{Values.first_name}}" type="text" name="firstname" id="" class="form-control" placeholder="" >
             </div>
             <!--lname-->
-            <div class="form-group mt-2">
+            <div class="form-group mt-2" id="lname">
                 <label for=""> Last Name</label>
                 <input value="{{Values.last_name}}" type="text" name="lasttname" id="" class="form-control" placeholder="" >
               </div>
+              
             <!--Email-->
-            <div class="form-group mt-2">
+            <div class="form-group mt-2" id="email">
                 <label for=""> Email</label>
                 <input value="{{Values.email}}" required type="email" name="Email" id="" class="form-control" placeholder="example@gmail.com" >
               </div>
             <!--Password-->
-            <div class="form-group mt-2">
+            <div class="form-group mt-2" id="pass">
                 <label for=""> Password</label>
                 <input required type="password" name="password" id="" class="form-control" placeholder="*******" >
               </div>
               <!--PhoneNo-->
-            <div class="form-group mt-2">
+            <div class="form-group mt-2" id="phone">
                 <label for=""> Phone Number</label>
                 <input value="{{Values.phone}}" required type="text" name="phone" id="" class="form-control" placeholder="0333######" >
               </div>
 
-              <div class="form-group mt-4">
+              <div class="form-group mt-4" id="accbtn">
                   <input required class="btn btn-outline-light btn-info btn-change" type="submit" value="Create Account" >
               </div>
+
+                <!--Otp-->
+            <div class="form-group mt-2" id="Otp" style="visibility: hidden;">
+              <label for=""> Enter Otp code : </label>
+              <input  type="text"id="otp_code" class="form-control" placeholder="XXXXX" >
+            </div>
+            
+
+              <div class="form-group mt-4" id="otpbtn" style="visibility: hidden;">
+                <input required class="btn btn-outline-light btn-primary btn-change" type="button" value="Varify Phone Number !" >
+            </div>
 
             </form>
 

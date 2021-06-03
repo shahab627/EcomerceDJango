@@ -12,7 +12,7 @@ class Customer(models.Model):
         self.save()
 
     def __str__(self):
-        return self.first_name
+        return self.first_name+" "+self.last_name
 
     def isExist(self):
         if Customer.objects.filter(email=self.email) or Customer.objects.filter(phone=self.phone):

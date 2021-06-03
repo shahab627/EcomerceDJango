@@ -12,13 +12,17 @@
     <div  class="container-fluid mt-3">
       
       <div class="row">
+       
         <!-- filter-->
           <div class="col-lg-2 mx-auto shadow" style="margin-top: 100px;">
             <div class="row" >
+              <div id="category">
+                <h2>Products<b> Category</b></h2>
+              </div>
                
                <a href="/?category=">
                 <div class="col-3">
-                  <img class="image"  src = "{% static 'images\all.jpg' %}">
+                  <img class="image img-fluid"  src = "{% static 'images\all.jpg' %}">
                   <div class="overlay">
                       <div class="text">Select All</div>
                   </div>
@@ -69,46 +73,51 @@
                 
                 <h5 class="card-title" >  {{product.name}}</h5>
                 <p class="item-price"><b>Price :  <strike>1099</strike>  {{product.price}} Rs   </b></p>
-                <p class="card-des" style="text-overflow: ellipsis; overflow: hidden;  white-space: nowrap;">{{product.description}}</p>
+                <p class="card-des" id="ProductDes">{{product.description}}</p>
 
                 <!-- Products  size selection-->
-
+             
                 
                 <div class="row" id="radios">
                   
-
+                    <form method="post" action="#" class="zoom-cont">
+                        <fieldset class="r-pill">
+                      
+                          <div class="r-pill__group">
+                            {% if product.small %}
+    
+                            <span class="r-pill__item">
+                                <input class="form-check-input smallRadio"  type="radio" name="Radio-{{product.id}}"   value="Small-{{product.id}}" >
+                                <label class="form-check-label" for="smallRadio"> S</label>
+                            </span>
+                            {% endif %}
+    
+                          {% if product.medium %}
+    
+                            <span class="r-pill__item">
+                                <input class="form-check-input  mediumRadio"  type="radio" name="Radio-{{product.id}}"   value="Medium-{{product.id}}" >
+                                <label class="form-check-label" for="mediumRadio"> M </label>
+                            </span>
+                            {% endif %}
+                            {% if product.large %}
+                      
+                            <span class="r-pill__item">
+                                <input class="form-check-input largeRadio"  type="radio" name="Radio-{{product.id}}"   value="Large-{{product.id}}" >
+                                <label class="form-check-label" for="largeRadio">L </label>
+                            </span>
+                            {% endif %}
+                            {% if product.Xlarge %}
+                            <span class="r-pill__item">
+                                <input class="form-check-input XlargeRadio"  type="radio" name="Radio-{{product.id}}"   value="XLarge-{{product.id}}" >
+                                <label class="form-check-label" for="XlargeRadio"> XL </label>
+                            </span>
+                            {% endif %}
+                          </div>
+                        </fieldset>
+                      </form>
+    
                   
-                    {% if product.small %}
-
-                    <div class="form-check col">
-                      <input class="form-check-input smallRadio"  type="radio" name="Radio-{{product.id}}"   value="Small-{{product.id}}" >
-                      <label class="form-check-label" for="smallRadio"> Small </label>
-                    </div>
-                    {% endif %}
-  
-                    {% if product.medium %}
-                    <div class="form-check col">
-                      <input class="form-check-input  mediumRadio"  type="radio" name="Radio-{{product.id}}"   value="Medium-{{product.id}}" >
-                      <label class="form-check-label" for="mediumRadio"> Medium </label>
-                    </div>
-                    {% endif %}
-  
-                    {% if product.large %}
-                    <div class="form-check col">
-                      <input class="form-check-input largeRadio"  type="radio" name="Radio-{{product.id}}"   value="Large-{{product.id}}" >
-                      <label class="form-check-label" for="largeRadio">Large </label>
-                    </div>
-                    {% endif %}
-  
-                    {% if product.Xlarge %}
-                    <div class="form-check col">
-                      <input class="form-check-input XlargeRadio"  type="radio" name="Radio-{{product.id}}"   value="XLarge-{{product.id}}" >
-                      <label class="form-check-label" for="XlargeRadio"> XLarge </label>
-                    </div>
-                    {% endif %}
-
-              
-                
+                    
 
                 </div>
 
@@ -116,9 +125,10 @@
                 <div class="row">
                   <span class="p-2">
                     <a href="{% url 'RateReview' product.id %}">
-                      <button type="button" id="RRvlaue" class="btn btn-secondary btn-outline-info border rounded-3 m-3 RRbtn" style="color: white;" 
-                      data-sid='{{product.id}}' > Rate & Review
-                      </button>
+                      <div type="button" id="RRvlaue" class="btn btn-outline-info border rounded-3 m-3 RRbtn" style="color: white;" 
+                      data-sid='{{product.id}}' ><img style="width: 40px; height: 35px;" src="{% static 'images/rating.png' %}"> |
+                      <img style="width: 40px; height: 35px; margin-left: 3px;" src="{% static 'images/review.png' %}">
+                      </div>
                     </a>
                    
                 </span>
@@ -133,21 +143,21 @@
 
                 <!--sending product obj and cart dictionary to cart.py and returns tru false-->
                 {% if product|is_in_cart:request.session.cart %}
-                <div class="row nu-gutters" >
+                <div class="row" style="padding: 4px;" >
                   
-                  <form action="/#{{product.id}}" class="col-2" id="minusForm" method="POST" >
+                  <form action="/#{{product.id}}" class="col-sm" id="minusForm" method="POST" >
                     {% csrf_token %}
                     <input hidden type="text" name="productId" value='{{product.id}}'>
                     <input hidden type="text" name="cartRemove" value='True'>
-                    <input type="submit"  value="-" class="btn btn-block btn-secondary minusbtn">
+                    <input type="submit"  value="-" class="btn btn-block btn-outline-dark minusbtn">
                   </form>
 
-                  <div class="col text-center mt-2">{{product | cart_quantity:request.session.cart }}</div>
+                  <div class="col-sm text-center mt-2">{{product | cart_quantity:request.session.cart }}</div>
 
-                  <form action="/#{{product.id}}" class="col-2" id="plusForm" method="POST" >
+                  <form action="/#{{product.id}}" class="col-sm" id="plusForm" method="POST" >
                     {% csrf_token %}
                     <input hidden type="text" name="productId" value='{{product.id}}'>
-                    <input type="submit"  value="+" class=" btn btn-block btn-secondary plusbtn">
+                    <input type="submit"  value="+" class=" btn btn-block btn-outline-dark plusbtn">
                   </form>
                   
                 </div>
@@ -156,7 +166,7 @@
                 <form action="/#{{product.id}}" method="POST"  class="btn-block addToCartForm">
                   {% csrf_token %}
                   <input hidden type="text" name="productId" value='{{product.id}}'>
-                  <input type="submit" id="addtoCartBtn"  class="btn btn-secondary form-control " value="Add to cart">
+                  <input type="submit" id="addtoCartBtn"  class="btn btn-outline-dark form-control " value="Add to cart">
                 </form>
                 {% endif %}
 
@@ -204,14 +214,189 @@
           
 
         </div>
+        <div class="row">
+              <!--Trending-->
+
+    
+<div class="container mt-5 ">
+  <div class="row">
+      <div class="col-md-12" id="Trending">
+          <h2>Trending <b>Products</b></h2>
+          <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+          <!-- Carousel indicators -->
+          <ol class="carousel-indicators">
+            {% for n in trending %}
+            {% if forloop.counter == 1 %}
+              <li data-target="#myCarousel" data-slide-to="{{forloop.counter}}" class="active"></li>
+              {% else %}
+              <li data-target="#myCarousel" data-slide-to={{forloop.counter}}></li>
+            {% endif %}
+            {% endfor %}
+          </ol>
+          <!-- Wrapper for carousel items -->
+          <div class="carousel-inner">
+              
+            {% for product in trending  %}
         
+            {% if forloop.counter == 1 %}
+            <div class="carousel-item active">
+            {% else %}
+            <div class="carousel-item">
+            {% endif %}
+                  <div class="row">
+
+                    {% for p in product  %}
+
+                      <div class="col-sm-3">
+                          <div class="thumb-wrapper">
+                              <div class="img-box">
+                                  <img src="{{p.image.url}}" class="img-fluid" alt="">
+                              </div>
+                              <div class="thumb-content">
+                                  <h4>{{p.name}}</h4>
+                                  
+                                  <p class="item-price"><strike>$400.00</strike> <span>{{p.price}}</span></p>
+                                  <div class="star-rating">
+                                      <ul class="list-inline">
+                                        {%for i in p|get_ratting  %}
+                        
+                                          <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                      {% endfor %}
+                                      </ul>
+                                  </div>
+                                  <a href="#" class="btn btn-primary">Buy Item</a>
+                              </div>
+                          </div>
+                      </div>
+
+                      {% endfor %} 
+
+                  </div>
+              </div>
+
+              {% endfor %} 
+            
+
+              
+
+          </div>
+          <!-- Carousel controls -->
+          <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+              <i class="fa fa-angle-left"></i>
+          </a>
+          <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+              <i class="fa fa-angle-right"></i>
+          </a>
+      </div>
+      </div>
+  </div>
+</div>
+
+  
+
+        </div>
+      </div>
+<!----Offers--->
+<div class="offer">
+  <div class="row">
+      <div class="row">
+          <div class="col-2">
+              <img src="{% static 'images/exclusive.png'%}" class="offer-img">
+          </div>
+          <div class="col-2">
+              <h3>Exclusive Available on MyShop</h3>
+              <h1>Smart Band 4</h1>
+              <small style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">BLOOD OXYGEN SATURATION MONITOR: 
+                  With Amazfit Band 5 you can measure your blood oxygen saturation and understand your physical state with OxygenBeats. Ideal during high-intensity
+                   workouts and sports such as marathons 
+                   and gym workouts.<br></small>
+                   <br>
+              <a href="">
+                <button class="BuyNow">
+                 Buy Now &#8594;
+                </button> </a>
+          
+          </div>
+      </div>    
+  </div>
+</div>
+
+<!----Brands--->
+<div class="brands">
+  <div class="container-fluid">
+      <div class="row" style="display: flex; justify-content: center;">
+          <div class="col-5">
+              <img src=" {% static 'images/logo-coca-cola.png'%}">
+          </div>
+          <div class="col-5">
+              <img src=" {% static 'images/logo-godrej.png'%}">
+          </div>
+          <div class="col-5">
+              <img src="{% static 'images/logo-paypal.png'%}">
+          </div>
+          <div class="col-5">
+              <img src=" {% static 'images/logo-oppo.png'%}">
+          </div>
+          <div class="col-5">
+              <img src=" {% static 'images/logo-philips.png '%}">
+          </div>
+      </div>
+  </div>
+</div>
 
 
+<!----Footer--->
 
+<div class="footer">
+  <div class="container">
+      <div class="row">
+          <div class="footer-col-1">
+              <h3>
+                  Download Our App
+              </h3>
+              <p> Downlaod App for Android on your phone </p>
+              <div class="app-logo">
+                  <img src=" {% static 'images/play-store.png'%}" alt="">
+                  <img src="{% static 'images/app-store.png'%}" alt="">
+              </div>
+          </div>
+          <div class="footer-col-2">
+              
+              <img src="{% static 'images/logo-white.png'%}">
+              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec nisi a felis condimentum 
+                  viverra non et dui. Duis a lacus pretium est efficitur pellentesque. Phasellus sagittis consequat
+                   nunc vel malesuada. Sed non facilisis velit. </p>
+          </div>
+          <div class="row">
+            <span class="footer-col-3">
+              
+              <h3>
+                  Useful Links
+              </h3>
+              <ul>
+                  <li>Coupons</li>
+                  <li>Blog Post</li>
+                  <li>Return Policy</li>
+                  <li>Join  Affiliate</li>
+              </ul>
+          </span>
+          <span class="footer-col-4">
+              <h3>
+                  Follow Us
+              </h3>
+              <ul>
+                  <li>Facebook</li>
+                  <li>Twitter</li>
+                  <li>Instagaram</li>
+                 
+              </ul>
+          </span>
       </div>
 
-
-     
+          </div>
+          
+  </div>
+</div>
     </div>
 
 

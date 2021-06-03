@@ -39,5 +39,4 @@ class Login(View):
 
 def logout(request):
     request.session.clear()
-    print("fffffffhello")
     return redirect('login')

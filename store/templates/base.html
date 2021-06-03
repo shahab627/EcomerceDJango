@@ -14,7 +14,7 @@
     <link rel="stylesheet"  href="{% static 'styles.css' %}">
     
     <link rel="stylesheet" href="{% static 'review.css' %}">
-    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
 
     
 
@@ -138,6 +138,124 @@
     })
   }
   
+  // Sign Up form--------------------------
+
+  let code =null
+  
+  $("#SignUPForm").submit(signUp);
+ // $("#otp_code").change(OtpBtn);
+  $("#otpbtn").click(Otpvarification);
+  
+
+  function Otpvarification(){
+
+    try{
+      var token = '{{csrf_token}}';
+      code = document.getElementById("otp_code").value
+    alert(code)
+
+    $.ajax({
+      headers: { "X-CSRFToken": token },
+      method: "POST",
+      url: "/SignUp",
+      data: {'code':code}
+  })
+      .done(function (data) {
+
+        if (data.status == "valid")
+        {
+          alert("Code varified Account created !!")
+          location.href="/" //this will redirect to your index
+        }
+        else{
+          alert("Code not correct !!")
+        }
+      
+          
+      })
+      .fail(function (response) {
+          console.log(response)
+      })
+    
+    }
+    catch(err)
+    {
+      alert(err)
+    }
+
+    
+
+
+  }
+
+
+  function OtpBtn(){
+
+    code = document.getElementById("otp_code").value
+    alert(code)
+    if (code.length == 4){
+      document.getElementById("otpbtn").disabled = false;
+    }
+    else{
+      document.getElementById("otpbtn").disabled = true;
+    }
+  }
+
+
+  function signUp(event)
+    {
+         //read data of form 
+         event.preventDefault()
+         const valuesInArray = $(this).serializeArray()
+         const body = {}
+        
+         
+           valuesInArray.reduce((body, e) => {
+               body[e.name] = e.value
+               return body
+           }, body)
+   
+           console.log([body])
+           $.ajax({
+            method: "POST",
+            url: "/SignUp",
+            data: body
+        })
+            .done(function (data) {
+
+              document.getElementById("error").innerHTML += "";
+
+              if (!data.error)
+              {
+                console.log(data)
+                document.getElementById("accbtn").remove();
+                document.getElementById("phone").remove();
+                document.getElementById("pass").remove();
+                document.getElementById("email").remove();
+                document.getElementById("fname").remove();
+                document.getElementById("lname").remove();
+                document.getElementById("otpbtn").style.visibility = "visible";
+
+                document.getElementById("Otp").style.visibility = "visible";
+              }
+              else
+              {
+                alert(data.error)
+                document.getElementById("error").style.visibility = "visible";
+                document.getElementById("error").innerHTML += data.error;
+
+            
+              }
+                
+  
+                
+            })
+            .fail(function (response) {
+                console.log(response)
+            })
+
+    }
+  
 
    
    // check out form--------------------------
@@ -163,10 +281,18 @@
           url: "/check-out",
           data: body
       })
-          .done(function (response) {
-              console.log(response)
-              event.target.reset()
+          .done(function (data) {
+             
+            if (data.status == "save"){
               alert(" Your Items are Placed !! ")
+              location.href="/" //this will redirect to your index
+
+            }
+            else
+            {
+              alert(" size not selected or field empty !!")
+            }
+              
 
               
           })
@@ -358,11 +484,18 @@
               $.ajax({
                 headers: { "X-CSRFToken": token },
                 method: "POST",
-                url: '',
+                url: '/rate',
                 data: {'PID':id,'ratting':ratting}
             })
-                .done(function (response) {
-                  console.log(response)
+                .done(function (data) {
+                  if(data.status == "save")
+                  {
+                    alert("Ratted !!")
+                  }
+                  else
+                  {
+                    alert("need to creat Account !!")
+                  }
         
                 })
                 .fail(function (response) {

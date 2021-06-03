@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from store.models.product import Product
 from store.models.category import Category
 from store.models.customer import Customer
+from store.models.rate import Rate
 from django.views import View  # import for class based views
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -15,10 +16,22 @@ class Index(View):
 
     def get(self, request):
         # checking if cart contain items for condition statements in home
-        cart =request.session.get('cart')
+        cart = request.session.get('cart')
+        top_items=[]
+        sliced_item =[]
+        count =0
         if not cart:
-            request.session['cart']={}
+            request.session['cart'] = {}
 
+        # getting top rated items
+
+        items = Rate.get_all_ratting().values()
+
+        for p in items:
+            top_items.append(Product.get_product_by_id(str(p.get('product_id'))))
+
+        splitedSize = 4
+        splited = [top_items[x:x + splitedSize] for x in range(0, len(top_items), splitedSize)]
 
         prds = None
         categ = Category.get_all_categories()
@@ -28,38 +41,35 @@ class Index(View):
         else:
             prds = Product.get_all_products()
 
-        #Applying pagination
+        # Applying pagination
         paginator = Paginator(prds, 4)  # Show 25 contacts per page.
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
         # Getiing user detail from session
-        currentCustomer =None
+        currentCustomer = None
         mail = request.session.get('customer_email')
         if mail:
-            currentCustomer=Customer.get_customer_by_mail(mail)
+            currentCustomer = Customer.get_customer_by_mail(mail)
 
-        #-Post Data-------------------------------
+        # -Post Data-------------------------------
         data = {}
         data['products'] = page_obj
         data['categories'] = categ
         data['currentCustomer'] = currentCustomer
-
-
+        data['trending'] = splited
+        data['trending-range'] = 4
 
         return render(request, 'index.html', data)
 
-
-
     def post(self, request):
 
-        data = request.POST.get('size')   # getting size through ajax
+        data = request.POST.get('size')  # getting size through ajax
         productId = request.POST.get('productId')  # getting product id from index page on click
-        cart_Remove = request.POST.get('cartRemove') # return true if we press - button on Home
+        cart_Remove = request.POST.get('cartRemove')  # return true if we press - button on Home
 
         # size---------------------------------------------
         size = request.session.get('size')
-        print(size)
 
         if data is not None:
             items = data.split('-')
@@ -71,9 +81,7 @@ class Index(View):
 
         request.session['size'] = size
 
-
-
-        #-----------------------------------------------
+        # -----------------------------------------------
         # handling cart and quantity
         if productId is not None:
 
@@ -97,6 +105,5 @@ class Index(View):
                 cart[productId] = 1
 
             request.session['cart'] = cart
-
 
         return redirect('Homepage')
