@@ -8,13 +8,13 @@
 
     <div class="border shadow-sm p-4 m-6">
         <p class="pl-4 display-4 ml-4" style="font-family: monospace;"> Your Items</p>
-        <table class="table">
-            <thead>
+        <table id="checkout_table" class="table">
+            <thead >
                 <tr>
                    
                     <th>Sno</th>
                     <th>Image</th>
-                    <th>Product Name</th>
+                    <th>Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Size</th>
@@ -41,8 +41,19 @@
             <tfoot>
                 <tr >
                     <td colspan="4"></td>
-                    <td colspan="1" ><b>Total Amount</b></td>
+                    <td colspan="1" ><b>Subtotal:</b></td>
                     <td><b>{{products|total_Amount:request.session.cart|Currency}}</b></td>
+                   
+                </tr>
+                <tr>
+                  <td colspan="4"></td>
+                  <td colspan="1"><b>Shipping Cost: </b></td>
+                  <td><b>10 % </b></td>
+                </tr>
+                <tr>
+                  <td colspan="4"></td>
+                  <td colspan="1"><b>Grand Total: </b></td>
+                  <td><b>{{products|grand_total|Currency}}</b></td>
                 </tr>
             </tfoot>
         </table>

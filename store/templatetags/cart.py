@@ -1,6 +1,9 @@
 from django import template
 from store.models.rate import Rate
+
 register = template.Library()
+
+amount =[]
 
 
 @register.filter(name='is_in_cart')  # providing availabilty to index page
@@ -33,7 +36,16 @@ def total_Amount(product, cart):
     Sum = 0
     for p in product:
         Sum += total_price(p, cart)
+
+    amount.append(Sum)
     return Sum
+
+
+@register.filter(name='grand_total')
+def grand_total(rate):
+
+    g_total = round(amount[0] + (amount[0] * 0.1))
+    return g_total
 
 
 @register.filter(name='product_size')  # sum of all items
@@ -49,7 +61,7 @@ def product_size(product, size):
 
 @register.filter(name='get_ratting')
 def get_ratting(product):
-    rate=[]
+    rate = []
     rating = list(Rate.get_ratting(str(product.id)).values())
     for i in range(int(rating[0].get('rating'))):
         rate.append(i)

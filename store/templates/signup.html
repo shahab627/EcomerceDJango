@@ -20,34 +20,47 @@
                 <h2 class="mx-4 my-3" >Create an Account </h2>
                 <hr style="width: auto; height: 2px">
             <!--fname-->
-            <div class="form-group mt-2" id="fname">
-              <label for=""> First Name</label>
-              <input value="{{Values.first_name}}" type="text" name="firstname" id="" class="form-control" placeholder="" >
+            <div class="input-block">
+              <input value="{{Values.first_name}}" class="form-control" type="text" name="firstname" id="input-text" required spellcheck="false">
+              <span class="placeholder">
+                First Name 
+              </span>
             </div>
+
             <!--lname-->
-            <div class="form-group mt-2" id="lname">
-                <label for=""> Last Name</label>
-                <input value="{{Values.last_name}}" type="text" name="lasttname" id="" class="form-control" placeholder="" >
+              <div class="input-block">
+                <input value="{{Values.last_name}}" class="form-control" type="text" name="lasttname" id="input-text" required spellcheck="false">
+                <span class="placeholder">
+                  Last Name 
+                </span>
               </div>
-              
             <!--Email-->
-            <div class="form-group mt-2" id="email">
-                <label for=""> Email</label>
-                <input value="{{Values.email}}" required type="email" name="Email" id="" class="form-control" placeholder="example@gmail.com" >
+
+              <div class="input-block">
+                <input value="{{Values.email}}" class="form-control" type="text" name="Email" id="input-text" required spellcheck="false">
+                <span class="placeholder">
+                  Email 
+                </span>
               </div>
+
             <!--Password-->
-            <div class="form-group mt-2" id="pass">
-                <label for=""> Password</label>
-                <input required type="password" name="password" id="" class="form-control" placeholder="*******" >
+              <div class="input-block">
+                <input class="form-control" type="password" name="password" id="input-text" required spellcheck="false">
+                <span class="placeholder">
+                  Password
+                </span>
               </div>
               <!--PhoneNo-->
-            <div class="form-group mt-2" id="phone">
-                <label for=""> Phone Number</label>
-                <input value="{{Values.phone}}" required type="text" name="phone" id="" class="form-control" placeholder="0333######" >
+
+              <div class="input-block">
+                <input value="{{Values.phone}}" class="form-control" type="text" name="phone" id="input-text" required spellcheck="false">
+                <span class="placeholder">
+                  Phone Number
+                </span>
               </div>
 
               <div class="form-group mt-4" id="accbtn">
-                  <input required class="btn btn-outline-light btn-info btn-change" type="submit" value="Create Account" >
+                  <input required class="btn btn-outline-light btn-info btn-change" id="crate_acc" type="submit" value="Create Account" >
               </div>
 
                 <!--Otp-->

@@ -1,0 +1,111 @@
+
+/*****background-image:  url('{% static 'images\bg44.jpg' %}');  background-repeat: no-repeat;  background-size: 100%;***********/
+body{
+
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+#products .showDetail:hover {background-color: #464747;
+    color: azure;}
+
+
+
+#products img{
+    height: 250px;
+}
+
+
+#navbarSupportedContent li{
+    margin-left: 25px;
+}
+
+#searchArea{
+
+    margin-left: 700px;
+}
+nav{
+    font-family: fantasy;
+
+}
+
+.nave-username{
+    color: rgb(19, 19, 66);
+    margin-left: 20px;
+}
+
+ .minusbtn:hover{
+    color:rgb(19, 17, 17);
+    background-color: rgb(228, 228, 228);
+
+}
+.plusbtn:hover{
+    color:rgb(19, 17, 17);
+    background-color: rgb(228, 228, 228);
+
+}
+
+
+#addtoCartBtn:hover{
+    color:rgb(19, 17, 17);
+    background-color: rgb(228, 228, 228);
+
+}
+
+
+
+
+
+div.input-block {
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  div.input-block input {
+    font-weight: 40;
+    font-size: 18px;
+    color: #495055;
+  
+    width: 380px;
+    padding: 10px 10px;
+    border-radius: 1rem;
+    border: 1px solid  #D9D9D9;
+    outline:none;
+  }
+  
+  div.input-block span.placeholder {
+    position: absolute;
+    margin: 14px 0;
+    padding: 0 4px;
+    font-family: Roboto, sans-serif;
+  
+    color:  #6c757d;
+  
+    display: flex;
+    align-items: center;
+  
+    font-size: 18px;
+  
+    top: 0;
+    left: 17px;
+  
+    transition: all 0.2s;
+    transform-origin: 0% 0%;
+    background: none;
+    pointer-events: none;
+  }
+  
+  div.input-block input:valid + span.placeholder,
+  div.input-block input:focus + span.placeholder {
+  transform: scale(0.8) translateY(-30px);
+  background: #fff;
+  }
+  
+  div.input-block input:focus{
+  color: #284B63;
+  border-color: #284B63;
+  }
+  
+  div.input-block input:focus + span.placeholder {
+  color: #284B63;
+  }

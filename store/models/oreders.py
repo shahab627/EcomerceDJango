@@ -26,6 +26,10 @@ class Order(models.Model):
     def get_order_by_customer(customer_id):
         return Order.objects.filter(customer=customer_id).order_by('-date')
 
+    @staticmethod
+    def remove_order(order_id):
+        return Order.objects.filter(id=order_id).delete()
+
 class Order_Customer(models.Model):
     product = models.ManyToManyField(Product)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

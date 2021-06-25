@@ -8,6 +8,7 @@ from store.models.customer import Customer
 from django.views import View  # import for class based views
 from django.contrib.auth.hashers import make_password, check_password
 
+
 class Login(View):
     def get(self, request):
         return render(request, 'login.html')

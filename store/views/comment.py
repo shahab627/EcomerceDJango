@@ -13,7 +13,6 @@ from django.views import View  # import for class based views
 
 class RateReview(View):
 
-
     # product id obtain by dynamic URL
     def get(self, request,productID):
 

@@ -11,31 +11,23 @@ from django.views import View  # import for class based views
 import datetime
 
 
-
 class OrderView(View):
 
     def get(self, request):
 
-        self.date_status={}
+        self.date_status = {}
         customer = request.session.get('customer_email')
         mail = request.session.get('customer_email')
         if mail:
             currentCustomer = Customer.get_customer_by_mail(mail)
 
         order = Order.get_order_by_customer(currentCustomer.id)
+        return render(request, 'orders.html', {'orders': order})
 
-        # for O in order:
-        # #self.date_margin(O.product.id, O.date)
+    def post(self, request):
+        id = request.POST.get("id")
+        print("hrerew",id)
+        print(Order.remove_order(id))
+        return JsonResponse({'status': 'save'})
 
-
-        return  render(request,'orders.html',{'orders':order})
-
-
-    def date_margin(self,pid,date):
-
-        today = datetime.date.today()
-        margin = datetime.timedelta(days=3)
-
-        state = today - margin <= datetime.date(date) <= today + margin
-        self.date_status[pid]=state
 

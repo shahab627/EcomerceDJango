@@ -5,6 +5,8 @@ from .category import Category
 class Product(models.Model):
     name = models.CharField(max_length=50)
     price = models.IntegerField(default=0)
+    stroke = models.IntegerField(default=0)
+    Sale = models.BooleanField(default=False)
     small = models.BooleanField(default=False)
     large = models.BooleanField(default=False)
     medium = models.BooleanField(default=False)

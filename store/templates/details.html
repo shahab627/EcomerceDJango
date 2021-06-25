@@ -1,114 +1,105 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
 {% load static %}
 {% load cart %}
-<div style="margin-top: 100px;">
 
+<div style="margin-top: 70px;">
+  <div class="container-fluid" >
+    <div class="row">
+      <div class="col-lg-5 mx-auto" >
+        <div>
+          <img src={{product.image.url}} class="shadow img-fluid round-image border-top" style="width: 530px; height: 480px; border-radius: 15px;">
+        </div>
+      </div>
 
-    <div class="container-fluid " style="margin-top: 70px;">
-        <div class="row">
-          <div class="col-lg-5 mx-auto" >
-            
-            <div>
-              <img src={{product.image.url}} class="shadow" style="width: 530px; height: 500px; border-radius: 20px;">
+      <div class="col-lg-6 mx-auto">
+        <div class=" row mb-4 shadow p-3 rounded-lg border-top mb-2" style="border-radius: 40px;">
+          <div class="container">
+            <h1 class="text-black-50">{{product.name}}</h1>
+            <h4 class="text-info font-italic border-bottom px-2" style="font-family: cursive;">Rs. {{product.price}}</h4>
+            <!--Quantity-->
+            <div class="row nu-gutters text-center" >
+              <span>
+                <input type="button"  value="-" onclick= UpdateSub() class="btn btn-lg btn-outline-info minusbtn" >
+                <label class=" text-center mx-4" id="Quantity"> <b>{{product | cart_quantity:request.session.cart }}</b></label>
+                <input type="button"  value="+" onclick= UpdateAdd() class=" btn btn-lg btn-outline-info plusbtn" >
+              </span>
+              <span style="padding-top: 10px; padding-bottom: 10px;" >
+                <input hidden type="text" id="DetailPID" value='{{product.id}}'>
+                <div class="d-grid">
+                  <input type="submit" id="addtoCartBtn"  class="btn btn-secondary" style="border-radius: 40px;" value="Add to cart">
+                </div>
+                <br>
+              </span>
             </div>
-     
-            
-          </div>
-    
-          <div class="col-lg-7 mx-auto ">
-            <div class=" row mr-3 shadow p-3 rounded-lg" style=" background-color: rgba(222, 235, 241, 0.562);" >
-                <div class="container">
-                    <h1 class="text-center text-black-50">{{product.name}}</h1>
-                    <h4 class="text-secondary text-center border-bottom">Price : {{product.price}} Rs</h4>
-    
-                  <!--Quantity-->
-                 <div class="row nu-gutters " style="margin-left: 39%; margin-top: 4%;" >
-                    <span>
-                      <input type="button"  value="-" onclick= UpdateSub() class="btn  btn-lg btn-secondary minusbtn" >
-                      <label class=" text-center mx-4" id="Quantity"> <b>{{product | cart_quantity:request.session.cart }}</b></label>
-                        
-                      <input type="button"  value="+" onclick= UpdateAdd() class=" btn btn-lg btn-secondary plusbtn" >
-                    </span>
-                   
+            <h4 class="text-secondary fw-bold text-uppercase border-top" style="letter-spacing: .2em">Desciption:</h4>
+            <p class="text-info px-2" style="font-family: cursive;">
+              {{product.description}}
+            </p>
+            {% if product.small or product.medium or product.large or product.Xlarge  %}
+            <!---Size-->
+            <br>
+            <div class="text-secondary border-top">
+              <h4> Select Size:</h4>
+              <!-- <div class="mt-3 ml-3 text-dark row border-top border-bottom px-4" style="font-family: cursive; background: #EA8B10; border-radius: 15px;">
+                {% if product.small %}
+                <span class="form-check col" style="">
+                  <input class="form-check-input SmallR"  type="radio" name="Radio"   value="Small" >
+                  <label class="form-check-label" for="smallRadio"> Small </label>
+                </span>
+                {% endif %}
 
-                  
-                  <span style="margin: 20px;"  >
-                    <input hidden type="text" id="DetailPID" value='{{product.id}}'>
-                    <input type="submit" id="addtoCartBtn"  class="btn btn-lg btn-secondary " value="Add to cart">
-                   </span>
-                  
+                {% if product.medium %}
+                <span class="form-check col">
+                  <input class="form-check-input  MediumR"  type="radio" name="Radio"   value="Medium" >
+                  <label class="form-check-label" for="mediumRadio"> Medium </label>
+                </span>
+                {% endif %}
+
+                {% if product.large %}
+                <span class="form-check col">
+                  <input class="form-check-input LargeR"  type="radio" name="Radio"   value="Large" >
+                  <label class="form-check-label" for="largeRadio">Large </label>
+                </span>
+                {% endif %}
+
+                {% if product.Xlarge %}
+                <span class="form-check col">
+                  <input class="form-check-input XlargeR"  type="radio" name="Radio"   value="XLarge" >
+                  <label class="form-check-label" for="XlargeRadio"> XLarge </label>
+                </span>
+                {% endif %}
+              </div> -->
+
+              <div class="container text-center ">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="border-radius: 15px; border-color: #DA8619;">
+                  {% if product.small %}
+                  <input type="radio" class="btn-check SmallR" name="btnradio" id="btnradio1" value="Small" autocomplete="off" checked>
+                  <label class="btn btn-outline-info" for="btnradio1">Small</label>
+                  {% endif %}
+                  {% if product.medium %}
+                  <input type="radio" class="btn-check MediumR" name="btnradio" id="btnradio2" value="Medium" autocomplete="off">
+                  <label class="btn btn-outline-info" for="btnradio2">Medium</label>
+                  {% endif %}
+                  {% if product.large %}
+                  <input type="radio" class="btn-check LargeR" name="btnradio" id="btnradio3" value="Large" autocomplete="off">
+                  <label class="btn btn-outline-info" for="btnradio3">Large</label>
+                  {% endif %}
+                  {% if product.Xlarge %}
+                  <input type="radio" class="btn-check XlargeR" name="btnradio" id="btnradio4" value="XLarge" autocomplete="off">
+                  <label class="btn btn-outline-info" for="btnradio4">Xtra Large</label>
+                  {% endif %}
                 </div>
-    
-    
-    
-                    <h4 class="text-secondary ml-3 border-top">Desciption :</h4>
-                    <p class="text-info px-2" style="font-family: cursive;">
-                      {{product.description}}
-                    </p>
-                   
-    
-                    {% if product.small or product.medium or product.large or product.Xlarge  %}
-                    <!---Size-->
-                    <div class="mt-3 ml-3 text-secondary">
-                        <h4> Select Size :</h4>
-                        <div class="mt-3 ml-3 text-dark row border-top" style="font-family: cursive;">
-                           
-    
-                          {% if product.small %}
-                            <span class="form-check col">
-                              <input class="form-check-input SmallR"  type="radio" name="Radio"   value="Small" >
-                              <label class="form-check-label" for="smallRadio"> Small </label>
-                            </span>
-                            {% endif %}
+              </div>
 
-                           
-                            {% if product.medium %}
-                            <span class="form-check col">
-                              <input class="form-check-input  MediumR"  type="radio" name="Radio"   value="Medium" >
-                              <label class="form-check-label" for="mediumRadio"> Medium </label>
-                            </span>
-                            {% endif %}
-
-                            {% if product.large %}
-                            <span class="form-check col">
-                              <input class="form-check-input LargeR"  type="radio" name="Radio"   value="Large" >
-                              <label class="form-check-label" for="largeRadio">Large </label>
-                            </span>
-                            {% endif %}
-
-                            {% if product.Xlarge %}
-                            <span class="form-check col">
-                              <input class="form-check-input XlargeR"  type="radio" name="Radio"   value="XLarge" >
-                              <label class="form-check-label" for="XlargeRadio"> XLarge </label>
-                            </span>
-                            {% endif %}
-
-               
-        
-                        </div>
-                    </div>
-
-                    {% endif %}
-    
-    
-                </div>
-    
-                    
-        
-    
-       
+            </div>
+            {% endif %}
+            <br>
           </div>
         </div>
       </div>
-    
     </div>
-    
-
-
+  </div>
 </div>
 
 {% endblock %}
-

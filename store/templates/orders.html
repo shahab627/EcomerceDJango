@@ -20,7 +20,9 @@
                     <th>Quantity</th>
                     <th>Size</th>
                     <th>Total</th>
+                    <th>Cancel Order</th>
                     <th>Status</th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +37,13 @@
                     <td>{{order.quantity}}</td>
                     <td>{{order.size}}</td>
                     <td>{{order.quantity| Total_Order:order.price|Currency}}</td>
+
+                    {% if order.date|Date_margin %}
+                    <td> <button id="order_id{{order.id}}" class="order_id btn btn-sm btn-outline-light btn-info btn-change r-pill"  value="{{order.id}}">Cancel</button></td>
+                    {% else %}
+                    <td> <button id="order_id{{order.id}}" class="order_id btn btn-sm btn-outline-dark btn-info btn-change r-pill" disabled value="{{order.id}}">Cancel</button></td>
+                    {% endif %}
+                    
                     {% if order.status %}
 
                     <td class="badge" 
@@ -46,6 +55,7 @@
                     style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">Pending</td>
                     {% endif %}
                     
+                  
                 </tr>
 
                 {% endfor %}

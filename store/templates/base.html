@@ -8,13 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,300;1,600;1,700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/ada84da280.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">   
-    <link rel="stylesheet"  href="{% static 'styles.css' %}">
+    <link rel="stylesheet"  href="{% static 'index.css' %}">
     
     <link rel="stylesheet" href="{% static 'review.css' %}">
     <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 
     
 
@@ -22,72 +24,67 @@
 
 
   </head>
-  <body>
+  <body >
+
+
 
 <!-- nav bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="box-shadow: 0px 4px 7px  #777;">
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 0px 4px 7px #777;">
   <div class="container-fluid">
-  <a class="navbar-brand" href="/">MyShop</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto mx-2">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home </a>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Profile
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          
-          {% if request.session.customer_id %}
-          <a class="dropdown-item" href="/logout">Logout</a>
-          {% else %}
-          <a class="dropdown-item" href="/login">Login</a>
-          <a class="dropdown-item" href="/SignUp">SignUp</a>
+    <a class="navbar-brand" href="/">ST Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home </a>
+        </li>
+  
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Profile
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if request.session.customer_id %}
+            <a class="dropdown-item" href="/logout">Logout</a>
+            {% else %}
+            <a class="dropdown-item" href="/login">Login</a>
+            <a class="dropdown-item" href="/SignUp">SignUp</a>
+            {% endif %}
+          </div>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link " href="/Cart"> <i class="fa fa-cart-plus fa-1x" aria-hidden="true"></i>
+            <span class="badge" style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">
+            {{request.session.cart.keys|length}}
+            </span>
+          </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/orders"> Order </a>
+          </li>
+          {% if currentCustomer %}
+          <li class="nave-username nav-item "  >
+            <label  class="nav-link"> Hello ! {{currentCustomer.first_name}}</label>
+          </li>
           {% endif %}
-        </div>
-      </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 
-      <li class="nav-item">
-        <a class="nav-link " href="/Cart"> <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
-        <span class="badge"  
-         style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">
-          {{request.session.cart.keys|length}}</span></a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link" href="/orders"> Order </a>
-      </li>
-       {% if currentCustomer %}
-      <li class="nave-username nav-item "  >
-        <label  class="nav-link"> Hello ! {{currentCustomer.first_name}}</label>
-      </li>
-
-       {% endif %}
-
-    </ul>
-
-    <div id="searchArea">
-    <form class=" input-group w-auto " style="margin-left: 30px;">
-      <input class="form-control mr-sm-0" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-
-  </div>
-
-  </div>
-
-</div>
-</nav>
 
 
 
 {% block content %} {% endblock %}
+{% include 'footer.html' %}
 
 
 <!---Trending-->
@@ -428,6 +425,39 @@
                 })
 
             }
+            // Cencel Order -----------------------------
+
+            $(".order_id").click(remove_item);
+
+            function remove_item() {
+              var token = '{{csrf_token}}';
+            
+            
+                id = $(this).val();
+                $.ajax({
+                  headers: { "X-CSRFToken": token },
+                  method: "POST",
+                  url: '/orders',
+                  data: {'id':id}
+              })
+                  .done(function (data) {
+                    if(data.status)
+                    {
+          
+                      alert("Removed")
+                      location.href="/orders" 
+                    }
+          
+                  })
+                  .fail(function (response) {
+                      console.log(response)
+                  })
+
+              
+             
+              
+
+            }
 
             // Rate Item-----------------------------
             ratedIndex = -1
@@ -480,6 +510,7 @@
               id = document.getElementById("PID").value
               ratting = $(this).attr("data-index");
 
+              document.getElementById("rate_value").innerHTML = ratting+" / 5";
 
               $.ajax({
                 headers: { "X-CSRFToken": token },
@@ -512,3 +543,67 @@
   </body>
 </html>
 
+
+
+
+
+<!-- nav bar
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="box-shadow: 0px 4px 7px  #777;">
+
+  <div class="container-fluid">
+  <a class="navbar-brand" href="/">MyShop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto mx-2">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home </a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profile
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          
+          {% if request.session.customer_id %}
+          <a class="dropdown-item" href="/logout">Logout</a>
+          {% else %}
+          <a class="dropdown-item" href="/login">Login</a>
+          <a class="dropdown-item" href="/SignUp">SignUp</a>
+          {% endif %}
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link " href="/Cart"> <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
+        <span class="badge"  
+         style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">
+          {{request.session.cart.keys|length}}</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="/orders"> Order </a>
+      </li>
+       {% if currentCustomer %}
+      <li class="nave-username nav-item "  >
+        <label  class="nav-link"> Hello ! {{currentCustomer.first_name}}</label>
+      </li>
+
+       {% endif %}
+
+    </ul>
+
+    <div id="searchArea">
+    <form class=" input-group w-auto " style="margin-left: 30px;">
+      <input class="form-control mr-sm-0" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+  </div>
+
+  </div>
+
+</div>
+</nav> -->

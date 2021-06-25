@@ -32,9 +32,12 @@ class CheckOut(View):
         size = request.session.get('size')
         products = Product.get_all_products_by_id(list(cart.keys()))
 
-        for product in products:
-            if size.get(str(product.id)) is None:
-                status = "not save"
+        if size:
+            for product in products:
+                if size.get(str(product.id)) is None:
+                    status = "not save"
+        else:
+            status = "not save"
 
         if status == "save":
             for product in products:
