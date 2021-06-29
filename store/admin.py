@@ -3,7 +3,7 @@ from .models.product import Product
 from .models.category import Category
 from .models.customer import Customer
 from .models.oreders import Order
-from .models.oreders import Order_Customer
+from .models.oreders import Order_Customer,all_orders
 from .models.rate import Rate
 from .models.comments import Comment
 
@@ -35,6 +35,9 @@ class AdminRatting(admin.ModelAdmin):
 class AdminCustomerOrders(admin.ModelAdmin):
     list_display = ['customer','products_ordered', 'phone', 'address', 'size', 'date', 'status', 'price']
 
+class AdminCustomerAllOrders(admin.ModelAdmin):
+    list_display = ['customer','order', 'phone', 'address', 'date', 'price']
+
 
 admin.site.register(Product, AdminProduct)
 admin.site.register(Category, AdminCategory)
@@ -43,3 +46,4 @@ admin.site.register(Order, AdminOrder)
 admin.site.register(Rate,AdminRatting)
 admin.site.register(Comment, AdminComment)
 admin.site.register(Order_Customer, AdminCustomerOrders)
+admin.site.register(all_orders, AdminCustomerAllOrders)

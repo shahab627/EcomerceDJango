@@ -18,7 +18,7 @@ class Index(View):
         # checking if cart contain items for condition statements in home
         cart = request.session.get('cart')
         top_items=[]
-        sliced_item =[]
+        category_items =[]
         count =0
         if not cart:
             request.session['cart'] = {}
@@ -41,8 +41,14 @@ class Index(View):
         else:
             prds = Product.get_all_products()
 
+        # applying category carousal split
+        for c in categ:
+            category_items.append(c)
+
+        category_splited = [category_items[x:x + 3] for x in range(0, len(category_items), 3)]
+
         # Applying pagination
-        paginator = Paginator(prds, 4)  # Show 25 contacts per page.
+        paginator = Paginator(prds, 8)  # Show 25 contacts per page.
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 

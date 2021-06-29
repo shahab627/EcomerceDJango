@@ -19,6 +19,7 @@
                     <th>Quantity</th>
                     <th>Size</th>
                     <th>Total</th>
+                    <th>Remove Item</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,12 +33,15 @@
                     <td>{{product| cart_quantity:request.session.cart}}</td>
                     <td>{{product| product_size:request.session.size}}</td>
                     <td>{{product| total_price:request.session.cart}}</td>
+                    <td> <button id="product_id{{product.id}}" class="product_id btn btn-sm btn-outline-light btn-danger btn-change r-pill"  value="{{product.id}}">Remove</button></td>
+
                 </tr>
 
                 {% endfor %}
 
                 
             </tbody>
+            {% if products|total_Amount:request.session.cart %}
             <tfoot>
                 <tr >
                     <td colspan="4"></td>
@@ -54,6 +58,7 @@
                   <td colspan="4"></td>
                   <td colspan="1"><b>Grand Total: </b></td>
                   <td><b>{{products|grand_total|Currency}}</b></td>
+                  <input value="{{products|grand_total}}" id="Totol_Price" hidden>
                 </tr>
             </tfoot>
         </table>
@@ -61,6 +66,13 @@
             <a href="#" class="btn btn-primary btn-outline-info border rounded-3 float-end col-lg-3" style="color: white;" 
             data-toggle="modal" data-target="#exampleModal"> Checkout</a>
         </div>
+        {% else %}
+
+        <tfoot>
+          <td> No Item Present in Cart !!</td>
+        </tfoot>
+
+        {% endif %}
 
 
     </div>
@@ -98,7 +110,13 @@
         </div>
       </div>
     </div>
+    
   </div>
+ 
+ 
 
 {% endblock %}
+
+
+
 

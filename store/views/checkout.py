@@ -21,6 +21,7 @@ class CheckOut(View):
         phone = request.POST.get('phone')
         address = request.POST.get('address')
         mail = request.session.get('customer_email')
+        price = request.POST.get('Price')
 
         if address is "" or phone is "":
             status = "not save"

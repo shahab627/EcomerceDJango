@@ -3,7 +3,7 @@ from store.models.rate import Rate
 
 register = template.Library()
 
-amount =[]
+amount = []
 
 
 @register.filter(name='is_in_cart')  # providing availabilty to index page
@@ -37,13 +37,23 @@ def total_Amount(product, cart):
     for p in product:
         Sum += total_price(p, cart)
 
-    amount.append(Sum)
+    amount.insert(0,Sum)
     return Sum
 
 
+@register.filter(name='total_amount_show')  # sum of all items
+def total_amount_show(product, cart):
+    Sum = 0
+    for p in product:
+        Sum += total_price(p, cart)
+
+    if Sum != 0:
+        return True
+    else:
+        return False
+
 @register.filter(name='grand_total')
 def grand_total(rate):
-
     g_total = round(amount[0] + (amount[0] * 0.1))
     return g_total
 

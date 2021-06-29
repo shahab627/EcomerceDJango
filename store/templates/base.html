@@ -13,10 +13,10 @@
     <script src="https://kit.fontawesome.com/ada84da280.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">   
     <link rel="stylesheet"  href="{% static 'index.css' %}">
-    
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <link rel="stylesheet" href="{% static 'review.css' %}">
     <link rel="stylesheet" href="{% static 'home.css' %}">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
 
     
 
@@ -84,10 +84,9 @@
 
 
 {% block content %} {% endblock %}
-{% include 'footer.html' %}
 
 
-<!---Trending-->
+
 
 
 
@@ -95,9 +94,13 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
 <script>
 
@@ -115,7 +118,6 @@
     
       if( $(this).is(":checked") ){ // check if the radio is checked
          val = $(this).val(); // retrieve the value
-          alert(val);
         }
 
 
@@ -161,11 +163,19 @@
 
         if (data.status == "valid")
         {
-          alert("Code varified Account created !!")
+          swal({
+            title: "OTP code verification ",
+            text: "Code varified Account created !!",
+            icon: "success",
+            button: "Yesss",
+          });
+         
+  
           location.href="/" //this will redirect to your index
         }
         else{
-          alert("Code not correct !!")
+          swal("Code not correct !!");
+          
         }
       
           
@@ -177,7 +187,7 @@
     }
     catch(err)
     {
-      alert(err)
+      swal(err);
     }
 
     
@@ -189,7 +199,6 @@
   function OtpBtn(){
 
     code = document.getElementById("otp_code").value
-    alert(code)
     if (code.length == 4){
       document.getElementById("otpbtn").disabled = false;
     }
@@ -226,18 +235,20 @@
               {
                 console.log(data)
                 document.getElementById("accbtn").remove();
-                document.getElementById("phone").remove();
+                document.getElementById("phone_").remove();
                 document.getElementById("pass").remove();
                 document.getElementById("email").remove();
                 document.getElementById("fname").remove();
                 document.getElementById("lname").remove();
+               
                 document.getElementById("otpbtn").style.visibility = "visible";
 
                 document.getElementById("Otp").style.visibility = "visible";
               }
               else
               {
-                alert(data.error)
+              
+                swal(data.error);
                 document.getElementById("error").style.visibility = "visible";
                 document.getElementById("error").innerHTML += data.error;
 
@@ -271,7 +282,8 @@
             return body
         }, body)
 
-        console.log([body])
+        price = document.getElementById("Totol_Price").value
+        body["Price"] = price
 
       $.ajax({
           method: "POST",
@@ -281,13 +293,22 @@
           .done(function (data) {
              
             if (data.status == "save"){
-              alert(" Your Items are Placed !! ")
+
+              swal({
+                title: "Order Placed !",
+                text: "Thanks for placing Order :)",
+                icon: "success",
+                button: "yess!",
+              });
+
+              setTimeout(() => {  console.log("Wait!"); }, 5000);
+  
               location.href="/" //this will redirect to your index
 
             }
             else
             {
-              alert(" size not selected or field empty !!")
+              swal("size not selected or field empty !!");
             }
               
 
@@ -297,6 +318,7 @@
               console.log(response)
           })
     }
+   
 
     // add comment ------------------------------------------
 
@@ -335,7 +357,8 @@
           {
             x =data.CommentsData;
             document.getElementById("commentTxt").value= ""
-            alert(" Your Comment is Posted !! ")
+      
+            swal("Your Comment is Posted !!");
 
             for(i =0; i < x.length;i++){
 
@@ -347,7 +370,7 @@
 
           }
           else{
-            alert("Plaese Login to Comment !!")
+            swal("Plaese Login to Comment !!");
           }
 
         })
@@ -425,7 +448,8 @@
                 })
 
             }
-            // Cencel Order -----------------------------
+            
+                        // Cencel Order -----------------------------
 
             $(".order_id").click(remove_item);
 
@@ -444,8 +468,43 @@
                     if(data.status)
                     {
           
-                      alert("Removed")
+                      swal("Removed !!");
                       location.href="/orders" 
+                    }
+          
+                  })
+                  .fail(function (response) {
+                      console.log(response)
+                  })
+
+              
+             
+              
+
+            }
+            // Remove Order from cart -----------------------------
+
+            $(".product_id").click(remove_item_cart);
+
+            function remove_item_cart() {
+              var token = '{{csrf_token}}';
+            
+            
+                id = $(this).val();
+
+      
+                $.ajax({
+                  headers: { "X-CSRFToken": token },
+                  method: "POST",
+                  url: '/Cart',
+                  data: {'id':id}
+              })
+                  .done(function (data) {
+                    if(data.status)
+                    {
+          
+                      swal("Removed !!");
+                      location.href="/Cart" 
                     }
           
                   })
@@ -521,11 +580,12 @@
                 .done(function (data) {
                   if(data.status == "save")
                   {
-                    alert("Ratted !!")
+                    swal("Ratted !!");
                   }
                   else
                   {
-                    alert("need to creat Account !!")
+                    swal("Need to creat Account !!");
+                   
                   }
         
                 })
@@ -547,63 +607,3 @@
 
 
 
-<!-- nav bar
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="box-shadow: 0px 4px 7px  #777;">
-
-  <div class="container-fluid">
-  <a class="navbar-brand" href="/">MyShop</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto mx-2">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home </a>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Profile
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          
-          {% if request.session.customer_id %}
-          <a class="dropdown-item" href="/logout">Logout</a>
-          {% else %}
-          <a class="dropdown-item" href="/login">Login</a>
-          <a class="dropdown-item" href="/SignUp">SignUp</a>
-          {% endif %}
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link " href="/Cart"> <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
-        <span class="badge"  
-         style="font-family: Arial, Helvetica, sans-serif; background-color: rgba(173, 6, 42, 0.719);">
-          {{request.session.cart.keys|length}}</span></a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link" href="/orders"> Order </a>
-      </li>
-       {% if currentCustomer %}
-      <li class="nave-username nav-item "  >
-        <label  class="nav-link"> Hello ! {{currentCustomer.first_name}}</label>
-      </li>
-
-       {% endif %}
-
-    </ul>
-
-    <div id="searchArea">
-    <form class=" input-group w-auto " style="margin-left: 30px;">
-      <input class="form-control mr-sm-0" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-
-  </div>
-
-  </div>
-
-</div>
-</nav> -->

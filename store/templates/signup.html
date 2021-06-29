@@ -20,40 +20,40 @@
                 <h2 class="mx-4 my-3" >Create an Account </h2>
                 <hr style="width: auto; height: 2px">
             <!--fname-->
-            <div class="input-block">
-              <input value="{{Values.first_name}}" class="form-control" type="text" name="firstname" id="input-text" required spellcheck="false">
+            <div class="input-block" id="lname">
+              <input value="{{Values.first_name}}" class="form-control" type="text" name="firstname"  required spellcheck="false">
               <span class="placeholder">
                 First Name 
               </span>
             </div>
 
             <!--lname-->
-              <div class="input-block">
-                <input value="{{Values.last_name}}" class="form-control" type="text" name="lasttname" id="input-text" required spellcheck="false">
+              <div class="input-block" id="fname">
+                <input value="{{Values.last_name}}" class="form-control" type="text" name="lasttname"  required spellcheck="false">
                 <span class="placeholder">
                   Last Name 
                 </span>
               </div>
             <!--Email-->
 
-              <div class="input-block">
-                <input value="{{Values.email}}" class="form-control" type="text" name="Email" id="input-text" required spellcheck="false">
+              <div class="input-block" id="email" >
+                <input value="{{Values.email}}" class="form-control" type="text" name="Email" required spellcheck="false">
                 <span class="placeholder">
                   Email 
                 </span>
               </div>
 
             <!--Password-->
-              <div class="input-block">
-                <input class="form-control" type="password" name="password" id="input-text" required spellcheck="false">
+              <div class="input-block" id="pass">
+                <input class="form-control" type="password" name="password"  required spellcheck="false">
                 <span class="placeholder">
                   Password
                 </span>
               </div>
               <!--PhoneNo-->
 
-              <div class="input-block">
-                <input value="{{Values.phone}}" class="form-control" type="text" name="phone" id="input-text" required spellcheck="false">
+              <div class="input-block" id="phone_" >
+                <input value="{{Values.phone}}" class="form-control" type="text" name="phone" required spellcheck="false">
                 <span class="placeholder">
                   Phone Number
                 </span>
@@ -88,5 +88,5 @@
 </div>
 
 
-
+{% include 'footer.html' %}
 {% endblock %}

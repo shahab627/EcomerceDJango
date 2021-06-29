@@ -9,6 +9,130 @@
 {% load cart %}
 
 
+<head>
+  <style media="screen">
+    .b-example-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%), inset 0 0.125em 0.5em rgb(0 0 0 / 15%);
+    }
+
+    element.style {
+      width: 380px;
+    }
+
+    .align-items-stretch {
+      align-items: stretch!important;
+    }
+
+    .flex-shrink-0 {
+      flex-shrink: 0!important;
+    }
+
+    .d-flex {
+      display: flex!important;
+    }
+    .flex-column {
+      flex-direction: column!important;
+    }
+
+    .scrollarea {
+      height: 500px;
+      overflow: scroll;
+    }
+
+
+    .carousel {
+      background: #EEE;
+    }
+
+    .carousel-cell {
+      width: 15%;
+      height: 220px;
+      margin-right: 10px;
+      /* background: #8C8; */
+      border-radius: 5px;
+      margin-top: 30px;
+      margin-bottom: 130px;
+      /* counter-increment: carousel-cell; */
+    }
+
+    /* .carousel-cell.is-selected {
+      background: #ED2;
+    } */
+
+    /* cell number */
+    .carousel-cell:before {
+      display: block;
+      text-align: center;
+      /* content: counter(carousel-cell); */
+      line-height: 200px;
+      font-size: 80px;
+      color: white;
+    }
+
+    .category_heading{
+      font-family:cursive;
+      color: white;
+      background-color: #48688dd5;
+    }
+
+    .carousel-cell img:hover{
+      opacity: 0.5;
+    }
+    #products img:hover{
+      opacity: 0.5;
+    }
+    .btn-circle {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.428571429;
+      border-radius: 15px;
+    }
+    .btn-circle.btn-lg {
+      width: 50px;
+      height: 50px;
+      padding: 10px 16px;
+      font-size: 18px;
+      line-height: 1.33;
+      border-radius: 25px;
+    }
+    .btn-circle.btn-xl {
+      width: 70px;
+      height: 70px;
+      padding: 10px 16px;
+      font-size: 24px;
+      line-height: 1.33;
+      border-radius: 35px;
+    }
+
+    #custom-cards{
+      background: linear-gradient(to top, #3334a0 0%, #08084d 100%);
+    }
+
+    #custom-cards h2{
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .cell-img img{
+      height: 280px;
+      width: 400px;
+    }
+
+    .banner-img{
+      height: 500px;
+    }
+    
+
+  </style>
+</head>
+
+
 <!-- Carousel -->
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
@@ -17,19 +141,13 @@
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">
-    <div class="carousel-item active">
+    <div class="carousel-item active banner-img">
       <img src="{% static 'images/ban1.jpg' %}" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
+
     </div>
-    <div class="carousel-item">
-      <img src="{% static 'images/ban2.jpg' %}" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
+    <div class="carousel-item banner-img">
+      <img src="{% static 'images/bn2.jpg' %}" class="d-block w-100" alt="...">
+
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -46,46 +164,60 @@
 <hr>
 
 
-    <div  class="container-fluid mt-3">
-      
-      <div class="row">
-       
-        <!-- filter-->
-          <div class="col-lg-2 mx-auto shadow" style="margin-top: 20px;">
-            <div class="row" >
-              <div id="category">
-                <h2>Products<b> Category</b></h2>
-              </div>
-               
-               <a href="/?category=">
-                <div class="col-3">
-                  <img class="image img-fluid"  src = "{% static 'images\all.jpg' %}">
-                  <div class="overlay">
-                      <div class="text">Select All</div>
-                  </div>
-              </div>
-              </a>
+<div class="b-example-divider"></div>
 
-              {% for category in categories %}
-              <a href="/?category={{category.id}}">
-                <div class="col-3">
-                  <img class="image"  src = "{{category.image.url}}">
-                  <div class="overlay">
-                      <div class="text">{{category.name}}</div>
-                  </div>
-              </div>
-              </a>
-              {% endfor %}             
-            </div>
+<div  class="container-fluid">
+  <div class="row">
+    <div class="py-4">
+      <div class="container-fluid">
+        <div class="row ">
+          <div class="text-center " >
+            <h1 class="text-capitalize font-weight-bold ">Category <i class="fas fa-chevron-down" style="color: #F5D430; "></i></h1>
           </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Flickity HTML init -->
+    <div class="carousel" data-flickity='{ "groupCells": true }' style="box-shadow: 0 1px 5px rgba(0,0,0,0.3);">
+      <div class="carousel-cell category_heading cell-img">
+        <a href="/?category=">
+        <img class="img-fluid"  src = "{% static 'images\all.jpg' %}" style="box-shadow: 0 1px 5px rgba(0,0,0,0.3); width: 265px; height: auto;">
+        </a>
+        <div class="card-footer ">
+          Select All
+        </div>
+      </div>
+      {% for category in categories %}
+      <div class="carousel-cell cell-img">
+        <a href="/?category={{category.id}}" >
+          <img class="img-fluid shadow-sm" src="{{category.image.url}}" >
+        </a>
+        <div class="card-footer category_heading">
+          <h5>{{category.name}}</h5>
           
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+
+
+    <div class="py-4" style="margin-top: 70px;">
+      <div class="container-fluid">
+        <div class="row ">
+          <div class="text-center ">
+            <h1 class="text-capitalize font-weight-bold ">All products <i class="fas fa-chevron-down" style="color: #F5D430;"></i></h1>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <!-- Products -->
-<div id="products" class="col-lg-9 mx-auto">
-  <div class=" row mx-auto item" style="margin-top: 100px;">
+<div id="products" class="col-lg-9 mx-auto" style="">
+  <div class=" row mx-auto item" >
     {% for product in products %}
-    <div class="card mx-auto my-3" id="{{product.id}}" style="width: 17rem; " >
+    <div class="card mx-auto my-3" id="{{product.id}}" style="width: 19rem; box-shadow: 0 1px 5px rgba(0,0,0,0.3);" >
       <span>
         <a href="{% url 'Details' product.id %}">
           <!-- <i class="fa fa-info-circle fa-2x mt-2" style="color: grey;" ></i> -->
@@ -137,9 +269,8 @@
         <div class="row">
           <span class="p-2">
             <a href="{% url 'RateReview' product.id %}">
-              <div type="button" id="RRvlaue" class="btn btn-outline-info border rounded-3 m-3 RRbtn" style="background: #6ea3d48c;"
-              data-sid='{{product.id}}' ><img style="width: 40px; height: 35px;" src="{% static 'images/rating.png' %}"> |
-              <img style="width: 40px; height: 35px; margin-left: 3px;" src="{% static 'images/review.png' %}">
+              <div type="button" id="RRvlaue" class="btn btn-outline-light btn-info btn-circle btn-xl" style="border: rgb(48, 61, 61);"
+              data-sid='{{product.id}}' ><img style="width: 40px; height: 35px;" src="{% static 'images/rating.png' %}"> 
             </div>
           </a>
         </span>
@@ -151,15 +282,15 @@
 
       <!--sending product obj and cart dictionary to cart.py and returns tru false-->
       {% if product|is_in_cart:request.session.cart %}
-      <div class="row text-center" style="padding: 4px;" >
-        <form action="/#{{product.id}}" class="col-sm" id="minusForm" method="POST" >
+      <div class="row text-center" style="">
+        <form action="/#{{product.id}}" class="col-sm" id="minusForm" method="POST" style="">
           {% csrf_token %}
           <input hidden type="text" name="productId" value='{{product.id}}'>
           <input hidden type="text" name="cartRemove" value='True'>
           <input type="submit"  value="-" class="btn btn-block btn-outline-dark minusbtn">
         </form>
 
-        <div class="col-sm text-center mt-2">{{product | cart_quantity:request.session.cart }}</div>
+        <div class="col-sm text-center mt-2" >{{product | cart_quantity:request.session.cart }}</div>
         <form action="/#{{product.id}}" class="col-sm" id="plusForm" method="POST" >
           {% csrf_token %}
           <input hidden type="text" name="productId" value='{{product.id}}'>
@@ -169,10 +300,10 @@
       </div>
       <!-- Products add to cart -->
       {% else %}
-      <form action="/#{{product.id}}" method="POST"  class="btn-block addToCartForm">
+      <form action="/#{{product.id}}" method="POST"  class="btn-block addToCartForm" style="box-shadow: 0 1px 5px rgba(0,0,0,0.3); background: transparent; border-color: transparent;">
         {% csrf_token %}
         <input hidden type="text" name="productId" value='{{product.id}}'>
-        <input type="submit" id="addtoCartBtn"  class="btn btn-outline-dark form-control"  value="Add to cart">
+        <input type="submit" id="addtoCartBtn"  class="btn btn-outline-dark form-control" style="box-shadow: 0 1px 5px rgba(0,0,0,0.3); background: transparent; border-color: transparent;"  value="Add to cart">
       </form>
       {% endif %}
     </div>
@@ -180,8 +311,9 @@
   {% endfor %}
 </div>
 </div>
-          
-        <!--Page number-->
+
+
+<!--Page number-->
 <div class="container-fluid">
   <nav aria-label="..." class="mt-5">
     <ul class="pagination justify-content-center">
@@ -214,8 +346,8 @@
     </ul>
   </nav>
 </div>
-
 <hr>
+<div class="b-example-divider"></div>
           
 
         </div>
@@ -226,7 +358,16 @@
 <div class="container mt-5 ">
   <div class="row">
       <div class="col-md-12" id="Trending">
-          <h2>Trending <b>Products</b></h2>
+        <div class="py-4" style="margin-top: 30px;">
+          <div class="container-fluid">
+            <div class="row ">
+              <div class="text-center ">
+                <h1 class="text-capitalize font-weight-bold ">Trending Items <i class="fas fa-chevron-down" style="color: #F5D430;"></i></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+    
           <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
           <!-- Carousel indicators -->
           <ol class="carousel-indicators">
@@ -269,7 +410,8 @@
                                       {% endfor %}
                                       </ul>
                                   </div>
-                                  <a href="#" class="btn btn-primary">Buy Item</a>
+                                  <a href="{% url 'Details' p.id %}" class="btn btn-primary">Buy Item</a>
+                                  
                               </div>
                           </div>
                       </div>
@@ -297,61 +439,99 @@
   </div>
 </div>
 
-  
-
         </div>
       </div>
-<!----Offers--->
-<div class="offer">
-  <div class="row">
-      <div class="row">
-          <div class="col-2">
-              <img src="{% static 'images/exclusive.png'%}" class="offer-img">
-          </div>
-          <div class="col-2">
-              <h3>Exclusive Available on MyShop</h3>
-              <h1>Smart Band 4</h1>
-              <small style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">BLOOD OXYGEN SATURATION MONITOR: 
-                  With Amazfit Band 5 you can measure your blood oxygen saturation and understand your physical state with OxygenBeats. Ideal during high-intensity
-                   workouts and sports such as marathons 
-                   and gym workouts.<br></small>
-                   <br>
-              <a href="">
-                <button class="BuyNow">
-                 Buy Now &#8594;
-                </button> </a>
-          
-          </div>
-      </div>    
-  </div>
-</div>
 
-<!----Brands--->
-<div class="brands">
-  <div class="container-fluid">
-      <div class="row" style="display: flex; justify-content: center;">
-          <div class="col-5">
-              <img src=" {% static 'images/logo-coca-cola.png'%}">
+      <div class="b-example-divider"></div>
+
+      <div class="py-4" style="margin-top: 30px;">
+        <div class="container-fluid">
+          <div class="row ">
+            <div class="text-center ">
+              <h1 class="text-capitalize font-weight-bold ">Quotes of the day <i class="fas fa-chevron-down" style="color: #F5D430;"></i></h1>
+            </div>
           </div>
-          <div class="col-5">
-              <img src=" {% static 'images/logo-godrej.png'%}">
-          </div>
-          <div class="col-5">
-              <img src="{% static 'images/logo-paypal.png'%}">
-          </div>
-          <div class="col-5">
-              <img src=" {% static 'images/logo-oppo.png'%}">
-          </div>
-          <div class="col-5">
-              <img src=" {% static 'images/logo-philips.png '%}">
-          </div>
+        </div>
       </div>
+
+<!----Offers--->
+<div class="container-fluid offer">
+  <div class="row">
+      <!-- Custom cards -->
+  <div class="container px-4 py-5" >
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-18 shadow-lg" id="custom-cards" >
+          <div class="d-flex flex-column h-100 p-4 pb-3 text-white text-shadow-1">
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">"Clothes mean nothing until someone lives in them"</h2>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                <small>Albert</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                <small></small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" id="custom-cards" >
+          <div class="d-flex flex-column h-100 p-4 pb-3 text-white text-shadow-1">
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">"Fashion is like eating, you shouldn't stick to the same menu."</h2>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                <small>Hamza Asif</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                <small></small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" id="custom-cards">
+          <div class="d-flex flex-column h-100 p-4 pb-3 text-shadow-1">
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">"Elegance is good taste, plus a dash of daring."</h2>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+               
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                <small>Shahab</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                <small></small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   </div>
 </div>
 
 
+<div class="b-example-divider"></div>
 
 
-
+{% include 'footer.html' %}
 {% endblock %}
 

@@ -16,9 +16,6 @@ class Order(models.Model):
     date = models.DateField(default=datetime.datetime.today)
     status = models.BooleanField(default=False)
 
-
-
-
     def placeOrder(self):
         self.save()
 
@@ -30,6 +27,7 @@ class Order(models.Model):
     def remove_order(order_id):
         return Order.objects.filter(id=order_id).delete()
 
+
 class Order_Customer(models.Model):
     product = models.ManyToManyField(Product)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -40,6 +38,18 @@ class Order_Customer(models.Model):
     size = models.CharField(max_length=100)
     date = models.DateField(default=datetime.datetime.today)
     status = models.BooleanField(default=False)
+
+    def products_ordered(self):
+        return ",".join([str(p) for p in self.product.all()])
+
+
+class all_orders(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, default='', on_delete=models.CASCADE)
+    price = models.IntegerField(default=0)
+    phone = models.CharField(max_length=50, default='', blank=True)
+    address = models.CharField(max_length=50, default='', blank=True)
+    date = models.DateField(default=datetime.datetime.today)
 
     def products_ordered(self):
         return ",".join([str(p) for p in self.product.all()])
