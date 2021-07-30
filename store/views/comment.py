@@ -55,7 +55,6 @@ class RateReview(View):
                                   customer=currentCustomer,
                                   comment=msg)
                 Comment.addComment(comment)
-                print(type(comment))
         else:
             status= "error"
 

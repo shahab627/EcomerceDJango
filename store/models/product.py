@@ -1,3 +1,5 @@
+from builtins import staticmethod
+
 from django.db import models
 from .category import Category
 

@@ -92,7 +92,6 @@ class Index(View):
         if productId is not None:
 
             cart = request.session.get('cart')
-            print(cart, type(productId), productId)
 
             if cart:
                 quantity = cart.get(productId)
